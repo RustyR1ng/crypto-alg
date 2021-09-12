@@ -1,0 +1,17 @@
+doctype html
+html(lang="ru")
+	block head
+		head
+			meta(charset="utf-8")
+			meta(content="width=device-width, initial-scale=1", name="viewport")
+			meta(content="ie=edge", http-equiv="x-ua-compatible")
+
+			link(rel="stylesheet" href=url_for('static', filename='css/normalize.css'))
+			link(rel="stylesheet" href=url_for('static', filename='css/main.css'))
+
+			link(rel="icon", type="image/png", href="./img/fav.png")
+
+			title Crypto
+	body
+		block content
+
