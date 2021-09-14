@@ -19,7 +19,7 @@ def create_table(key, alph):
     return table
 
 
-def enc(text, alph=alph, key="зонд", **kwargs):
+def enc(text, alph=alph, key="ильдар", **kwargs):
 
     result = []
     # table = create_table(alph, key)
@@ -44,7 +44,7 @@ def enc(text, alph=alph, key="зонд", **kwargs):
     return "".join(result)
 
 
-def dec(text, alph=alph, key="зонд", **kwargs):
+def dec(text, alph=alph, key="ильдар", **kwargs):
 
     result = []
     # table = create_table(alph, key)

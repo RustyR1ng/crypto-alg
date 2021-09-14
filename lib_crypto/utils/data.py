@@ -11,7 +11,7 @@ def get_text():
     return text_1000
 
 
-text_1000 = get_text()
+text_1000 = get_text().replace("\n", "")
 
 
 text_test = (

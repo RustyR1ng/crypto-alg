@@ -39,6 +39,7 @@ def enc(text, alph=alph, key="кодовое слово же", **kwargs):
     result = [key_mat * vec for vec in text_vectors]
     result = [item.item() for matrix in result for item in matrix]
     result = [alph[item % len(alph)] for item in result]
+
     return "".join(result)
 
 

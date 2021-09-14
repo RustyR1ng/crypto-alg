@@ -12,10 +12,8 @@ def test_crypt(enc, dec):
     _dec = dec(_enc, alph)
     print("Расшифровка Тест:", _dec)
 
-
-"""
     _enc = enc(text_1000, alph)
     print("Шифровка 1000:", _enc)
 
     _dec = dec(_enc, alph)
-    print("Расшифровка 1000:", _dec) """
+    print("Расшифровка 1000:", _dec)

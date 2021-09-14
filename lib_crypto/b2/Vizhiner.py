@@ -2,17 +2,19 @@ from .Belazo import create_row
 from ..utils.data import alph
 
 
-def enc(text, alph=alph, key="к", **kwargs):
+def enc(text, alph=alph, key="л", **kwargs):
 
     assert len(key) == 1, "Длина ключа должна быть равна 1"
 
-    alph += " ,:-."
+    # alph += " ,:-."
     result = []
     gamma = [key]
 
     for sym in text:
 
         sym = sym.lower()
+        if sym not in alph:
+            continue
         col_index = alph.index(sym)
 
         row = create_row(gamma[-1], alph)
@@ -25,15 +27,18 @@ def enc(text, alph=alph, key="к", **kwargs):
     return "".join(result)
 
 
-def dec(text, alph=alph, key="к", **kwargs):
+def dec(text, alph=alph, key="л", **kwargs):
 
-    alph += " ,:-."
+    # alph += " ,:-."
     result = []
     gamma = key + text
 
     for i, sym in enumerate(text):
 
         sym = sym.lower()
+
+        if sym not in alph:
+            continue
 
         row = create_row(gamma[i], alph)
         col_index = row.index(sym)
