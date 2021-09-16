@@ -82,13 +82,6 @@ def dec(nums, alph=alph, key="кодовое слово же", **kwargs):
 
 
 if __name__ == "__main__":
-    test = [int(item) for item in "1 4 8 3 7 2 6 9 5".split()]
+    from ..utils.test import test_crypt
 
-    print(test, to_symbols(test, alph))
-    enc_ = enc("никогда еще штирлиц не был так близок к провалу")
-
-    print(enc_)
-
-    dec_ = dec(enc_)
-
-    print(dec_)
+    test_crypt(enc, dec)
