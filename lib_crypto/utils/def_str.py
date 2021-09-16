@@ -7,4 +7,4 @@ def to_symbols(nums, alph):
 
 
 def clear_text(text, alph):
-    return [symbol for symbol in text if symbol in alph]
+    return "".join([symbol for symbol in text if symbol in alph])
