@@ -13,13 +13,14 @@ def get_algs():
         "Tritemi": {"enc": Tritemi.enc, "dec": Tritemi.dec},
         "Vizhiner": {"enc": Vizhiner.enc, "dec": Vizhiner.dec},
         "Matrix": {"enc": Matrix.enc, "dec": Matrix.dec},
+        "Playfair": {"enc": Playfair.enc, "dec": Playfair.dec},
     }
 
     return algs
 
 
 def key_required(alg):
-    return alg in ["Cesar", "Belazo", "Vizhiner", "Matrix"]
+    return alg in ["Cesar", "Belazo", "Vizhiner", "Matrix", "Playfair"]
 
 
 def get_result(text, alg, switch="enc", key=None):
