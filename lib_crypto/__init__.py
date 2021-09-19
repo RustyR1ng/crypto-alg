@@ -1,6 +1,7 @@
 from .b1 import *
 from .b2 import *
 from .b3 import *
+from .b4 import *
 
 
 def get_algs():
@@ -14,13 +15,15 @@ def get_algs():
         "Vizhiner": {"enc": Vizhiner.enc, "dec": Vizhiner.dec},
         "Matrix": {"enc": Matrix.enc, "dec": Matrix.dec},
         "Playfair": {"enc": Playfair.enc, "dec": Playfair.dec},
+        "Permutations": {"enc": Permutations.enc, "dec": Permutations.dec},
+        "Kardano": {"enc": Kardano.enc, "dec": Kardano.dec},
     }
 
     return algs
 
 
 def key_required(alg):
-    return alg in ["Cesar", "Belazo", "Vizhiner", "Matrix", "Playfair"]
+    return alg in ["Cesar", "Belazo", "Vizhiner", "Matrix", "Playfair", "Permutations"]
 
 
 def get_result(text, alg, switch="enc", key=None):
