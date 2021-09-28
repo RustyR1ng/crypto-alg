@@ -107,7 +107,7 @@ def get_pleif(bygrams, key_matrix, mode="enc"):
     return result
 
 
-def enc(text, alph=alph, key="бактерия"):
+def enc(text, alph=alph, key="штурм"):
     alph = remove_items_in_str(alph, "ё")
     text = clear_text(text.lower(), alph)
 
@@ -119,7 +119,7 @@ def enc(text, alph=alph, key="бактерия"):
     return "".join(result)
 
 
-def dec(text, alph=alph, key="бактерия"):
+def dec(text, alph=alph, key="штурм"):
     alph = remove_items_in_str(alph, "ё")
     text = clear_text(text.lower(), alph)
 

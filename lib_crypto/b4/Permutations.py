@@ -11,7 +11,7 @@ def reverse_rows(matrix):
 
 def get_text_matrix(text, cols):
     fill = cols - (len(text) % cols) if (len(text) % cols) != 0 else 0
-    text = list(text) + ([text[-1]] * fill)
+    text = list(text) + ([" "] * fill)
     matrix = np.array(text).reshape(-1, cols)
 
     return reverse_rows(matrix)
@@ -26,6 +26,7 @@ def get_key(key, alph):
 
 
 def enc(text, alph=alph, key="октябрь"):
+    alph += " "
     cols = len(key)
     text = clear_text(text, alph)
     text_matrix = get_text_matrix(text, cols)
@@ -37,11 +38,11 @@ def enc(text, alph=alph, key="октябрь"):
 
 
 def dec(text, alph=alph, key="октябрь"):
+    alph += " "
     text = clear_text(text, alph)
     cols = len(key)
     rows = len(text) // cols
     text_matrix = get_text_matrix(text, rows).transpose()
-    print(text_matrix)
 
     key = get_key(key, alph)
 
@@ -54,14 +55,11 @@ def dec(text, alph=alph, key="октябрь"):
     result = reverse_rows(result)
     result = ["".join(item) for item in result]
 
-    return "".join(result)
+    return "".join(result).strip()
 
 
 if __name__ == "__main__":
 
-    text = "пример маршрутной перестановкиа"
+    from ..utils.test import test_crypt
 
-    enc_ = enc(text)
-    print(enc_)
-    dec_ = dec(enc_)
-    print(dec_)
+    test_crypt(enc, dec)
