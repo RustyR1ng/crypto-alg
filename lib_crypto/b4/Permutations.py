@@ -25,7 +25,7 @@ def get_key(key, alph):
     return key
 
 
-def enc(text, alph=alph, key="октябрь"):
+def enc(text, alph=alph, key="год"):
     alph += " "
     cols = len(key)
     text = clear_text(text, alph)
@@ -37,7 +37,7 @@ def enc(text, alph=alph, key="октябрь"):
     return "".join(result)
 
 
-def dec(text, alph=alph, key="октябрь"):
+def dec(text, alph=alph, key="год"):
     alph += " "
     text = clear_text(text, alph)
     cols = len(key)

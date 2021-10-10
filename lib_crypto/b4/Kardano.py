@@ -62,10 +62,6 @@ def dec(grid, alph=alph, template_grid=grid_kardano, **kwargs):
 
 if __name__ == "__main__":
 
-    text = "шифр решетка является частным случаем шифра маршрутной перестановки"
+    from ..utils.test import test_crypt
 
-    enc_ = enc(text)
-    print(enc_)
-
-    dec_ = dec(enc_)
-    print(dec_)
+    test_crypt(enc, dec)

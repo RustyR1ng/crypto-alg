@@ -1,6 +1,6 @@
 import numpy as np
 from ..utils.data import alph
-from ..utils.def_str import to_indexes, to_symbols
+from ..utils.def_str import to_indexes, to_symbols, clear_text
 
 
 def is_int(num):
@@ -47,7 +47,7 @@ def nums_to_vectors(nums, cols):
 def enc(text, alph=alph, key="кодовое слово же", **kwargs):
 
     alph += "., ?"
-    text = text.lower()
+    text = clear_text(text, alph)
 
     key_sqrt = check_key(key)
 
