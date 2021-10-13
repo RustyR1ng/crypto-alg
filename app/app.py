@@ -2,13 +2,10 @@
 # -*- coding: utf-8 -*-
 
 from flask import Flask, render_template, request
-from flask_assets import Environment, Bundle
 from lib_crypto import get_algs, key_required, get_result
 from .utils.forms import EncForm
 
-
 app = Flask(__name__)
-
 
 app.jinja_env.add_extension("pypugjs.ext.jinja.PyPugJSExtension")
 
