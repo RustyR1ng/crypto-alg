@@ -1,0 +1,17 @@
+chardet==4.0.0
+click==8.0.3
+colorama==0.4.4
+Flask==2.0.2
+Flask-WTF==0.15.1
+itsdangerous==2.0.1
+Jinja2==3.0.2
+livereload==2.6.3
+MarkupSafe==2.0.1
+numpy==1.21.2
+pycodestyle==2.7.0
+pypugjs==5.9.9
+six==1.16.0
+toml==0.10.2
+tornado==6.1
+Werkzeug==2.0.2
+WTForms==2.3.3
