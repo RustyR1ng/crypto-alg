@@ -5,6 +5,10 @@
 def test_crypt(enc, dec):
 
     from .data import alph, text_1000, text_test
+    from .def_str import clear_text
+
+    text_test = clear_text(text_test)
+    text_1000 = clear_text(text_1000)
 
     _enc = enc(text_test, alph)
     print("Шифровка Тест:", _enc)
