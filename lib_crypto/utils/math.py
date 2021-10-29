@@ -20,3 +20,8 @@ def ex_gcd(a, m):
         y0, y1 = y1, y0 - y1 * q
 
     return a0, x0
+
+
+def pow_m1(x, mod):
+    a, b = ex_gcd(x, mod)
+    return a * b
