@@ -2,7 +2,7 @@
 import re
 import copy
 import sys
-
+from ..utils.def_bin import to_binary, bin_to_str
 
 REG_X_LENGTH = 19
 REG_Y_LENGTH = 22
@@ -50,31 +50,6 @@ key = set_key("0101001000011010110001110001100100101001000000110111111010110111"
 
 def get_key():  # gets the key
     return key_one
-
-
-def to_binary(plain):
-    """Converts plaintext to binary"""
-
-    my_bin = [
-        int(i)
-        for i in "".join(block[2:] for block in map(bin, bytearray(plain, "utf-8")))
-    ]
-
-    # print("Text |", plain)
-    # print("Binary Code |", my_bin)
-    # print("Text |", bin_to_str("".join(str(i) for i in my_bin)))
-
-    return my_bin
-
-
-def bin_to_str(bits, encoding="UTF-8", errors="surrogatepass"):
-    """Converts binary to string."""
-
-    # print("Converting |", bits, type(bits))
-    # print(*(bits[i * 8 : i * 8 + 8] for i in range(len(bits) // 8)))
-
-    n = int(bits, 2)
-    return n.to_bytes((n.bit_length() + 7) // 8, "big").decode(encoding, errors) or "\0"
 
 
 def get_majority(x, y, z):
@@ -165,6 +140,7 @@ def dec(cipher, key=key):
 
 # Example of 64-bit key: 0101001000011010110001110001100100101001000000110111111010110111
 if __name__ == "__main__":
+    
     from ..utils.test import test_crypt
 
     test_crypt(enc, dec)
