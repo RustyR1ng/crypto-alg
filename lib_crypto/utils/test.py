@@ -1,5 +1,6 @@
-#! /usr/bin/env python
 # -*- coding: utf-8 -*-
+
+from .print import *
 
 
 def test_crypt(enc, dec):
@@ -10,14 +11,16 @@ def test_crypt(enc, dec):
     text_test = clear_text(text_test)
     text_1000 = clear_text(text_1000)
 
-    _enc = enc(text_test, alph)
-    print("Шифровка Тест:", _enc)
+    print_header("Тест на пословице и тексте")
 
-    _dec = dec(_enc, alph)
-    print("Расшифровка Тест:", _dec)
+    _enc = enc(text_test)
+    print_kv("Шифровка пословицы", _enc)
 
-    _enc = enc(text_1000, alph)
-    print("Шифровка 1000:", _enc)
+    _dec = dec(_enc)
+    print_kv("Расшифровка пословицы", _dec)
 
-    _dec = dec(_enc, alph)
-    print("Расшифровка 1000:", _dec)
+    _enc = enc(text_1000)
+    print_kv("Шифровка 1000", _enc)
+
+    _dec = dec(_enc)
+    print_kv("Расшифровка 1000", _dec)
