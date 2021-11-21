@@ -38,3 +38,8 @@ def bytes_to_str(b_text: bytes, _return: str = "str") -> str:
 
         text = hexenc(b_text)
     return text
+
+
+def count_bits_in_num(num):
+    binary = bin(num)[2:]
+    return len(binary)
