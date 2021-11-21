@@ -1,7 +1,7 @@
 from random import randint
 from dataclasses import dataclass
 from typing import List
-from ..utils.math import pow_m1
+from ..utils.math import inverse_of
 from ..utils.def_str import clear_text, to_indexes, to_symbols
 
 
@@ -39,6 +39,9 @@ class Elgamal:
     def __init__(self, p: int, g: int, x: int = None):
         self.open_key, self.priv_key = gen_keys(p, g, x)
 
+    def __init__(self, open_key, priv_key):
+        self.open_key, self.priv_key = open_key, priv_key
+
     def __str__(self):
         return "\n".join(
             [
@@ -71,7 +74,7 @@ class Elgamal:
         for i in range(0, len(e_msg), 2):
 
             a, b = e_msg[i], e_msg[i + 1]
-            d_msg.append(((pow_m1(a ** x, p) * b)) % p)
+            d_msg.append(((inverse_of(a ** x, p) * b)) % p)
 
         return to_symbols(d_msg)
 
@@ -79,6 +82,6 @@ class Elgamal:
 if __name__ == "__main__":
     from ..utils.test import test_crypt
 
-    crypter = Elgamal(37, 2, 19)
+    crypter = Elgamal(OpenKey(37, 2, 35), PrivKey(19))
 
     test_crypt(crypter.enc, crypter.dec)
