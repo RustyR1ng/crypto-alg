@@ -1,4 +1,4 @@
-def extended_euclidean_algorithm(a: int, b: int):
+def extended_euclidean_algorithm(a: int, b: int) -> (int, int, int):
     """
     Возвращает кортеж из трёх элементов (gcd, x, y), такой, что
     a * x + b * y == gcd, где gcd - наибольший
@@ -20,7 +20,7 @@ def extended_euclidean_algorithm(a: int, b: int):
     return old_r, old_s, old_t
 
 
-def inverse_of(n: int, p: int):
+def inverse_of(n: int, p: int) -> int:
     """
     Возвращает обратную величину
     n по модулю p.
@@ -38,7 +38,7 @@ def inverse_of(n: int, p: int):
         return x % p
 
 
-def co_prime(a: int, b: int):
+def co_prime(a: int, b: int) -> bool:
     """
     Проверяет взаимно просты ли числа a и b
     """
@@ -66,5 +66,6 @@ def primes(n):
 
 def random_of_ranges(*ranges):
     from random import choice
+
     all_ranges = sum(ranges, [])
     return choice(all_ranges)
