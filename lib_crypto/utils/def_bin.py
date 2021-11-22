@@ -1,8 +1,9 @@
 from .def_str import is_hex
 from pygost.utils import hexdec, hexenc
+from typing import List
 
 
-def to_binary(plain):
+def to_binary(plain: str) -> List[int]:
     """Converts plaintext to binary"""
 
     binary = [
@@ -13,7 +14,9 @@ def to_binary(plain):
     return binary
 
 
-def bin_to_str(bits, encoding="UTF-8", errors="surrogatepass"):
+def bin_to_str(
+    bits: str, encoding: str = "UTF-8", errors: str = "surrogatepass"
+) -> str:
     """Converts binary to string."""
 
     n = int(bits, 2)
