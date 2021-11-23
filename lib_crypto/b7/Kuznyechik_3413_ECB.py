@@ -56,6 +56,7 @@ if __name__ == "__main__":
     from ..utils.test import test_crypt
 
     print_header("Примеры из GOST_R_34_13-2015")
+    print_kv("Ключ", HEX_KEY)
     plain_enc_dict = {
         "1122334455667700ffeeddccbbaa9988": "7f679d90bebc24305a468d42b9d4edcd",
         "00112233445566778899aabbcceeff0a": "b429912c6e0032f9285452d76718d08b",
