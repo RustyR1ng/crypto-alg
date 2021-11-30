@@ -1,11 +1,22 @@
 # -*- coding: utf-8 -*-
 
+from types import FunctionType
+
+import inspect
 from .print import *
 
 
-def test_crypt(enc, dec):
+def get_default_args(func):
+    signature = inspect.signature(func)
+    return {
+        k: v.default
+        for k, v in signature.parameters.items()
+        if v.default is not inspect.Parameter.empty
+    }
 
-    from .data import alph, text_1000, text_test
+
+def test_crypt(enc: FunctionType, dec: FunctionType) -> None:
+    from .data import text_1000, text_test
     from .def_str import clear_text
 
     text_test = clear_text(text_test)
@@ -13,6 +24,7 @@ def test_crypt(enc, dec):
 
     print_header("Тест на пословице и тексте")
 
+    print(get_default_args(enc))
     _enc = enc(text_test)
     print_kv("Шифровка пословицы", _enc)
 
