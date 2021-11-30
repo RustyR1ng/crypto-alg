@@ -58,8 +58,11 @@ def dec(text, alph=alph, key="год"):
     return "".join(result).strip()
 
 
-if __name__ == "__main__":
-
+def main():
     from ..utils.test import test_crypt
 
     test_crypt(enc, dec)
+
+
+if __name__ == "__main__":
+    main()

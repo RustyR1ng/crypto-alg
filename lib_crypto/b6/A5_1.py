@@ -123,11 +123,14 @@ def get_keystream(
 
 
 # Example of 64-bit key: 0101001000011010110001110001100100101001000000110111111010110111
-if __name__ == "__main__":
+
+
+def main():
 
     from ..utils.test import test_crypt
-    from ..utils.data import text_test
-    from ..utils.def_str import clear_text as ct
 
     crypter = Crypter(REGS_CONF)
     test_crypt(crypter.enc, crypter.dec)
+
+if __name__ == "__main__":
+    main()

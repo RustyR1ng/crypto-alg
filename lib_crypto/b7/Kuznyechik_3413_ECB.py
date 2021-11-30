@@ -52,7 +52,7 @@ def dec(text: str, key: str = HEX_KEY, _return: str = "str") -> str:
         return bytes_to_str(dec_bytes, _return)
 
 
-if __name__ == "__main__":
+def main():
     from ..utils.test import test_crypt
 
     print_header("Примеры из GOST_R_34_13-2015")
@@ -75,3 +75,7 @@ if __name__ == "__main__":
         except:
             pass
     test_crypt(enc, dec)
+
+
+if __name__ == "__main__":
+    main()

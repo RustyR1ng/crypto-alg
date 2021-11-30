@@ -19,13 +19,13 @@ class Elgamal:
 
     def get_public_key(self, private_key: int):
         assert 0 < private_key < self.q, f"Секретный ключ должен ∈ (0,{self.q})"
-        return self.curve.mult(G, private_key)
+        return self.curve.mult(self.G, private_key)
 
     def get_q(self):
         res_point = Point(-1, -1)
         q = 2
         while res_point:
-            res_point = self.curve.mult(G, q)
+            res_point = self.curve.mult(self.G, q)
             q += 1
         return q
 
@@ -44,14 +44,14 @@ class Elgamal:
 
     def decrypt(self, e_msg: EncMessage, private_key: int):
         R, e = e_msg.R, e_msg.e
-        Q = curve.mult(R, private_key)
-
+        Q = self.curve.mult(R, private_key)
+        p = self.curve.p
         result = (e * inverse_of(Q.x, p)) % p
 
         return result
 
 
-if __name__ == "__main__":
+def main():
     from ..utils.print import print_kv
 
     p, a, b = 11, 2, -5
@@ -67,3 +67,7 @@ if __name__ == "__main__":
 
     d_msg = crypter.decrypt(e_msg, priv_key)
     print_kv("Расшифровка", d_msg)
+
+
+if __name__ == "__main__":
+    main()

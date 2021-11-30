@@ -79,9 +79,13 @@ class Elgamal:
         return to_symbols(d_msg)
 
 
-if __name__ == "__main__":
+def main():
     from ..utils.test import test_crypt
 
     crypter = Elgamal(OpenKey(37, 2, 35), PrivKey(19))
 
     test_crypt(crypter.enc, crypter.dec)
+
+
+if __name__ == "__main__":
+    main()

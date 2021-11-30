@@ -31,6 +31,7 @@ u = ((а^z1 * у^z2 ) mod р) mod q.
 
 from dataclasses import dataclass
 from itertools import chain
+from typing import Union
 from ..utils.def_bin import count_bits_in_num as cbin
 from ..utils.math import primes, random_of_ranges
 from ..utils.def_str import clear_text as ct
@@ -62,9 +63,9 @@ class GOST94_ECP:
     def __init__(self, pub_key: PubKey, x: int = None, y: int = None):
         self.pub_key = pub_key
         if x:
-            assert x < q
+            assert x < pub_key.q
             self.x = x
-            self.y = (pub_key.a ** x) % p
+            self.y = (pub_key.a ** x) % pub_key.p
         elif y:
             self.y = y
 
@@ -74,7 +75,7 @@ class GOST94_ECP:
 
         return hashed_m
 
-    def generate_ecp(self, message: str, k: int, h: int = None) -> (int, int):
+    def generate_ecp(self, message: str, k: int, h: int = None) -> Union[int, int]:
         message = ct(message)
         p, q, a, x = self.pub_key.p, self.pub_key.q, self.pub_key.a, self.x
         assert k < q
@@ -101,7 +102,7 @@ class GOST94_ECP:
         return u == r
 
 
-if __name__ == "__main__":
+def main():
     from ..utils.data import text_test, text_1000
     from ..utils.print import print_kv
 
@@ -121,3 +122,7 @@ if __name__ == "__main__":
 
     print_kv("Подпись 1000", (r, s))
     print_kv("Проверка подписи", chk)
+
+
+if __name__ == "__main__":
+    main()

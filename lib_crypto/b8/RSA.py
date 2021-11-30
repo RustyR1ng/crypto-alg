@@ -65,8 +65,12 @@ class RSA:
         return m
 
 
-if __name__ == "__main__":
+def main():
     from ..utils.test import test_crypt
 
     encrypter = RSA((23, 247), (47, 247))
     test_crypt(encrypter.enc, encrypter.dec)
+
+
+if __name__ == "__main__":
+    main()

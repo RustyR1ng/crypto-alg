@@ -57,10 +57,7 @@ def dec(text: str, key: str = key, t: str = "str"):
     return dec_text
 
 
-if __name__ == "__main__":
-
-    print()
-
+def main():
     print_header("Пример из GOST_R_34_12-2015")
     text_example = "1122334455667700ffeeddccbbaa9988"
     enc_example = "7f679d90bebc24305a468d42b9d4edcd"
@@ -69,11 +66,12 @@ if __name__ == "__main__":
     print_kv("Открытый текст", text_example)
     print_kv("Результат", enc_example)
 
-    print()
-
     enc_text = enc(text_example, key)
     print_kv("Шифр", enc_text)
 
     dec_text = dec(enc_example, key, t="hex")
     print_kv("Расшифр.", dec_text)
-    print()
+
+
+if __name__ == "__main__":
+    main()

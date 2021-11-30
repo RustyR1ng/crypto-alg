@@ -15,8 +15,12 @@ def dec(text, alph=alph, **kwargs):
     )
 
 
-if __name__ == "__main__":
+def main():
 
-    from utils.test import test_crypt
+    from ..utils.test import test_crypt
 
     test_crypt(enc, dec)
+
+
+if __name__ == "__main__":
+    main()

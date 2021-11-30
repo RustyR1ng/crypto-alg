@@ -50,8 +50,11 @@ def dec(text, alph=alph, key="л", **kwargs):
     return "".join(result)
 
 
-if __name__ == "__main__":
-
+def main():
     from ..utils.test import test_crypt
 
     test_crypt(enc, dec)
+
+
+if __name__ == "__main__":
+    main()

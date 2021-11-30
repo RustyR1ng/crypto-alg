@@ -38,7 +38,7 @@ def decrypt_ecb(text: str, key: str) -> str:
         return res.decode()
 
 
-if __name__ == "__main__":
+def main():
     from ..utils.print import print_kv, print_header
     from ..utils.data import text_test, text_1000
 
@@ -68,3 +68,7 @@ if __name__ == "__main__":
 
     print_kv("Шифр 1000", enc)
     print_kv("Расшифровка", dec)
+
+
+if __name__ == "__main__":
+    main()

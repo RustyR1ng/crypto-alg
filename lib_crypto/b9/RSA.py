@@ -17,6 +17,7 @@ D=(1 MOD φ(N))/E.
 степень E (число E ему известно) по модулю N: m = SE MOD N.
 8. Сравнивает m и m’: если m = m’ - подпись верна.
 """
+__all__ = ["generate_ecp", "check", "main"]
 
 from ..utils.print import print_kv
 from ..utils.math import inverse_of, co_prime
@@ -52,8 +53,11 @@ def check(msg, ecp, e=e, n=p * q):
     return h == h_1
 
 
-if __name__ == "__main__":
+def main():
     from ..utils.data import text_test, text_1000
+
+    p, q, e, d = 7, 17, 7, 25
+    h = 10
 
     msg = clear_text(text_test)
     ecp = generate_ecp(msg)
@@ -69,3 +73,7 @@ if __name__ == "__main__":
 
     print_kv("Подпись для 1000", ecp)
     print_kv("Проверяем подпись", chk)
+
+
+if __name__ == "__main__":
+    main()

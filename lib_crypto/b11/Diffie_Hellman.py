@@ -39,9 +39,13 @@ def gen(n, a, priv_key_A, priv_key_B):
     return result_key
 
 
-if __name__ == "__main__":
+def main():
     n, a, key_A, key_B = 9, 4, 4, 5
     print_kv("n, a, key_A, key_B", (n, a, key_A, key_B))
 
     res = gen(n, a, key_A, key_B)
     print_kv("Ключ", res)
+
+
+if __name__ == "__main__":
+    main()

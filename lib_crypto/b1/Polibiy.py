@@ -33,3 +33,14 @@ def dec(text, alph=alph, **kwargs):
     sq = alph_to_sq(alph)
 
     return "".join([sq[int(sym[0]) - 1][int(sym[1]) - 1] for sym in text])
+
+
+def main():
+
+    from ..utils.test import test_crypt
+
+    test_crypt(enc, dec)
+
+
+if __name__ == "__main__":
+    main()

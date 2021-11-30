@@ -372,7 +372,7 @@ def decrypt(key, ciphertext, workload=100000):
 
 __all__ = [encrypt, decrypt, AES]
 
-if __name__ == "__main__":
+def main():
     from ..utils.print import print_kv
 
     message = b"\x32\x43\xF6\xA8\x88\x5A\x30\x8D\x31\x31\x98\xA2\xE0\x37\x07\x34"
@@ -403,5 +403,5 @@ if __name__ == "__main__":
     print_kv("Шифровка 1000", enc.hex())
     print_kv("Расшифрока", dec.decode())
 
-
-# encrypt('my secret key', b'0' * 1000000) # 1 MB encrypted in 20 seconds.
+if __name__ == "__main__":
+    main();

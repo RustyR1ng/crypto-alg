@@ -60,8 +60,11 @@ def dec(grid, alph=alph, template_grid=grid_kardano, **kwargs):
     return result
 
 
-if __name__ == "__main__":
-
+def main():
     from ..utils.test import test_crypt
 
     test_crypt(enc, dec)
+
+
+if __name__ == "__main__":
+    main()
