@@ -1,42 +1,49 @@
 from pygost.gost3412 import GOST3412Magma
 from pygost.utils import hexdec, hexenc
-from pygost.gost3413 import ecb_encrypt, ecb_decrypt, pad2, unpad2
+from pygost.gost3413 import ecb_encrypt, ecb_decrypt, pad3, unpad2
+from ..utils.def_bin import str_to_bytes, bytes_to_str
 
 
 def encrypt_ecb(text: str, key: str) -> str:
-    text, key = bytes(text, "utf-8"), hexdec(key)
+    text, key = str_to_bytes(text), hexdec(key)
     crypter = GOST3412Magma(key)
 
-    res = ecb_encrypt(crypter.encrypt, crypter.blocksize, pad2(text, crypter.blocksize))
+    res = ecb_encrypt(crypter.encrypt, crypter.blocksize, pad3(text, crypter.blocksize))
 
     return hexenc(res)
 
 
-def decrypt_ecb(text: str, key: str) -> str:
+def decrypt_ecb(text: str, key: str, _return="str") -> str:
     text, key = hexdec(text), hexdec(key)
     crypter = GOST3412Magma(key)
 
     res = ecb_decrypt(crypter.decrypt, crypter.blocksize, text)
 
     try:
-        return unpad2(res, crypter.blocksize).decode()
+        return bytes_to_str(unpad2(res, crypter.blocksize), _return)
     except ValueError:
-        return res.decode()
+        return bytes_to_str(res, _return)
 
 
 def main():
     from ..utils.print import print_header, print_kv
-    from ..utils.data import text_test, text_1000
+    from ..utils.data import text_1000
 
     key = "ffeeddccbbaa99887766554433221100f0f1f2f3f4f5f6f7f8f9fafbfcfdfeff"
+    plaintext = "92def06b3c130a59"
+    # plaintext += "db54c704f8189d20"
+    # plaintext += "4a98fb2e67a8024c"
+    # plaintext += "8912409b17b57e41"
 
-    print_header("Тест на пословице и 1000")
+    print_header("Тест ГОСТ режим простой замены")
 
-    enc = encrypt_ecb(text_test, key)
-    dec = decrypt_ecb(enc, key)
+    enc = encrypt_ecb(plaintext, key)
+    dec = decrypt_ecb(enc, key, "hex")
 
-    print_kv("Шифр пословицы", enc)
+    print_kv("Шифр", enc)
     print_kv("Расшифровка", dec)
+
+    print_header("Тест на 1000")
 
     enc = encrypt_ecb(text_1000, key)
     dec = decrypt_ecb(enc, key)
