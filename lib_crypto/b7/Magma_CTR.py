@@ -1,29 +1,26 @@
 from pygost.gost3412 import GOST3412Magma as Magma
 from pygost.utils import hexdec, hexenc
 from pygost.gost3413 import ctr
-from ..utils.def_str import is_hex
+from ..utils.def_bin import str_to_bytes, bytes_to_str
 
 
 def ctr_encrypt(text: str, key: str, iv: str) -> str:
     key, iv = hexdec(key), hexdec(iv)
     crypter = Magma(key)
+    text = str_to_bytes(text)
 
-    if is_hex(text):
-        text = hexdec(text)
-    else:
-        text = text.encode()
     res = ctr(crypter.encrypt, crypter.blocksize, text, iv)
 
     return hexenc(res)
 
 
-def ctr_decrypt(text: str, key: str, iv: str, _return="hex") -> str:
+def ctr_decrypt(text: str, key: str, iv: str, _return="str") -> str:
     key, iv, text = hexdec(key), hexdec(iv), hexdec(text)
     crypter = Magma(key)
 
     res = ctr(crypter.encrypt, crypter.blocksize, text, iv)
 
-    return hexenc(res) if _return == "hex" else res.decode()
+    return bytes_to_str(res, _return)
 
 
 def main():
@@ -41,14 +38,14 @@ def main():
     print_header("Тест ГОСТ гаммирование")
 
     enc = ctr_encrypt(plaintext, key, IV)
-    dec = ctr_decrypt(enc, key, IV)
+    dec = ctr_decrypt(enc, key, IV, "hex")
 
     print_kv("Шифр", enc)
     print_kv("Расшифровка", dec)
 
     print_header("Тест на 1000")
     enc = ctr_encrypt(text_1000, key, IV)
-    dec = ctr_decrypt(enc, key, IV, "text")
+    dec = ctr_decrypt(enc, key, IV)
 
     print_kv("Шифр 1000", enc)
     print_kv("Расшифровка", dec)
