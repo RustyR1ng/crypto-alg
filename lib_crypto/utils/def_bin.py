@@ -24,7 +24,7 @@ def bin_to_str(
 
 
 def str_to_bytes(text: str) -> bytes:
-    b_text = None
+
     if is_hex(text):
         b_text = hexdec(text)
     else:
@@ -34,7 +34,7 @@ def str_to_bytes(text: str) -> bytes:
 
 
 def bytes_to_str(b_text: bytes, _return: str = "str") -> str:
-    text = ""
+
     if _return == "str":
         text = b_text.decode("utf-8")
     else:
