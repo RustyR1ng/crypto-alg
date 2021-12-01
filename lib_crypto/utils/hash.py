@@ -1,7 +1,7 @@
 from .def_str import to_indexes, clear_text
 
 
-def hash(msg, p=11):
+def hash(msg: str, p: int = 11) -> int:
     h = 0
     h_list = []
     for symbol_code in to_indexes(msg):
