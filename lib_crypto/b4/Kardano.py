@@ -41,11 +41,10 @@ def enc(text, alph=alph, template_grid=grid_kardano, **kwargs):
 
     text = clear_text(text, alph)
 
-    return [enc_block(text[i : i + size]) for i in range(0, len(text), size)]
+    return ",".join(enc_block(text[i : i + size]) for i in range(0, len(text), size))
 
 
 def enc_block(text, alph=alph, template_grid=grid_kardano, **kwargs):
-    print(text)
     text = clear_text(text, alph)
     template_grid = np.array(template_grid)
 
@@ -66,12 +65,14 @@ def get_text(grid, template_grid):
 
 
 def dec(grids, alph=alph, template_grid=grid_kardano, **kwarg):
+    grids = grids.split(",")
     return "".join(dec_block(grid, alph, template_grid) for grid in grids)
 
 
 def dec_block(grid, alph=alph, template_grid=grid_kardano, **kwargs):
     grid = [list(row) for row in grid.split()]
     template_grid = np.array(template_grid)
+
     result = ""
     for template in get_templates(template_grid):
         result += get_text(grid, template)
