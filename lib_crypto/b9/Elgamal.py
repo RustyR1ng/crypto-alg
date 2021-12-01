@@ -1,3 +1,4 @@
+from typing import Union
 from sympy import isprime
 
 from ..utils.hash import hash
@@ -31,7 +32,7 @@ class Elgaml_ECP:
         b = ((h - X * a) * inverse_of(K, P - 1)) % (P - 1)
         return (a, b)
 
-    def check_ecp(self, msg: str, ecp: (int, int), public_key: int, h=None):
+    def check_ecp(self, msg: str, ecp: Union[int, int], public_key: int, h=None):
         P, G = self.P, self.G
         a, b = ecp
         msg = ct(msg)
@@ -76,6 +77,7 @@ def main():
 
     print_kv("Подпись 1000", ecp)
     print_kv("Проверка 1000", chk)
+
 
 if __name__ == "__main__":
     main()
