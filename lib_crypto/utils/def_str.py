@@ -23,7 +23,7 @@ def clear_text(text, alph=alph):
     text = replace_special(text, alph)
     text = text.lower()
     text = re.sub(f"[^{alph}]", "", text)
-    return "".join([symbol for symbol in text.lower() if symbol in alph])
+    return text
 
 
 def replace_special(text, alph=alph, replaces=REPLACES):
@@ -40,6 +40,12 @@ def is_hex(s):
         return all(c in string.hexdigits for c in s)
     except:
         return False
+
+
+def random_char(alph=alph):
+    from random import choice
+
+    return choice(alph)
 
 
 if __name__ == "__main__":
