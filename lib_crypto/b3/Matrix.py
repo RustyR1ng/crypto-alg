@@ -11,8 +11,7 @@ def to_slices(items, step):
     return [items[i : i + step] for i in range(0, len(items), step)]
 
 
-def check_key(key):
-    print(key)
+def check_key(key, alph=alph):
     key_sqrt = np.sqrt(len(key))
     print(len(key))
     assert is_int(key_sqrt), "Длина ключа должна быть квадратным корнем числа N"
@@ -20,7 +19,10 @@ def check_key(key):
     assert all(
         (symbol in alph for symbol in key)
     ), "Ключ содержит символ не входящий в алфавит"
-
+    try:
+        np.linalg.inv(text_to_matrix(key, alph, key_sqrt))
+    except:
+        raise ValueError("Определитель матрицы должен быть не равен нулю")
     return key_sqrt
 
 
@@ -52,7 +54,7 @@ def enc(text, alph=alph, key="бархатный", **kwargs):
 
     text = clear_text(text, alph)
 
-    key_sqrt = check_key(key)
+    key_sqrt = check_key(key, alph)
 
     text_indexes = to_indexes(text, alph)
     text_vectors = nums_to_vectors(text_indexes, key_sqrt)
@@ -70,9 +72,10 @@ def dec(nums, alph=alph, key="бархатный", **kwargs):
     if type(nums) == str:
         nums = [int(num) for num in nums.split(" ")]
 
-    key_sqrt = check_key(key)
+    key_sqrt = check_key(key, alph)
 
     inv_key_matrix = np.linalg.inv(text_to_matrix(key, alph, key_sqrt))
+
     vectors = nums_to_vectors(nums, key_sqrt)
 
     result = [inv_key_matrix * vec for vec in vectors]
