@@ -12,10 +12,14 @@ def to_slices(items, step):
 
 
 def check_key(key):
-
+    print(key)
     key_sqrt = np.sqrt(len(key))
-    assert is_int(key_sqrt)
+    print(len(key))
+    assert is_int(key_sqrt), "Длина ключа должна быть квадратным корнем числа N"
     key_sqrt = int(key_sqrt)
+    assert all(
+        (symbol in alph for symbol in key)
+    ), "Ключ содержит символ не входящий в алфавит"
 
     return key_sqrt
 
@@ -44,9 +48,8 @@ def nums_to_vectors(nums, cols):
     return vectors
 
 
-def enc(text, alph=alph, key="кодовое слово же", **kwargs):
+def enc(text, alph=alph, key="бархатный", **kwargs):
 
-    alph += "., ?"
     text = clear_text(text, alph)
 
     key_sqrt = check_key(key)
@@ -62,9 +65,7 @@ def enc(text, alph=alph, key="кодовое слово же", **kwargs):
     return " ".join([str(item) for item in result])
 
 
-def dec(nums, alph=alph, key="кодовое слово же", **kwargs):
-
-    alph += "., ?"
+def dec(nums, alph=alph, key="бархатный", **kwargs):
 
     if type(nums) == str:
         nums = [int(num) for num in nums.split(" ")]
