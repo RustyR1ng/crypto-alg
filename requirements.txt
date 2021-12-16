@@ -2,8 +2,5 @@ numpy==1.21.4
 rich==10.15.1
 pygost==5.7
 sympy==1.9
-livereload==2.6.3
 Flask==2.0.2
-Flask-WTF==1.0.0
-pypugjs==5.9.9
 flask-cors==3.0.10
