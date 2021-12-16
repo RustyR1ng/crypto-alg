@@ -10,5 +10,3 @@ TESTING = True
 DEBUG = True
 ENV = "development"
 SECRET_KEY = environ.get("SECRET_KEY") or urandom(12)
-
-TEMPLATES_AUTO_RELOAD = True
