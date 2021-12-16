@@ -1,6 +1,7 @@
 import numpy as np
+
 from ..utils.data import alph
-from ..utils.def_str import to_indexes, to_symbols, clear_text
+from ..utils.def_str import clear_text, to_indexes, to_symbols
 
 
 def is_int(num):

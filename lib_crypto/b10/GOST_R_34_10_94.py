@@ -32,12 +32,13 @@ u = ((а^z1 * у^z2 ) mod р) mod q.
 from dataclasses import dataclass
 from itertools import chain
 from typing import Union
+
 from ..utils.def_bin import count_bits_in_num as cbin
-from ..utils.math import primes, random_of_ranges
 from ..utils.def_str import clear_text as ct
 
 # from random import getrandbits as randbits, randint, choice
 from ..utils.hash import hash
+from ..utils.math import primes, random_of_ranges
 
 # RANGE_P = list(chain(range(509, 512), range(1020, 1024)))
 # RANGE_Q = list(range(254, 256))
@@ -101,7 +102,7 @@ class GOST94_ECP:
 
 
 def main():
-    from ..utils.data import text_test, text_1000
+    from ..utils.data import text_1000, text_test
     from ..utils.print import print_kv
 
     p, q, a = 23, 11, 6

@@ -1,5 +1,6 @@
-from ..utils.math import inverse_of
 from dataclasses import dataclass
+
+from ..utils.math import inverse_of
 
 
 @dataclass

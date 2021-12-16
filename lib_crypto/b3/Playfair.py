@@ -1,4 +1,5 @@
 import numpy as np
+
 from ..utils.data import alph
 from ..utils.def_str import clear_text
 

@@ -1,6 +1,5 @@
 from .data import alph
 
-
 REPLACES = {
     ",": "ЗПТ",
     ".": "ТЧК",

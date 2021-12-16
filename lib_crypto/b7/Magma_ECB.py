@@ -1,7 +1,8 @@
 from pygost.gost3412 import GOST3412Magma
+from pygost.gost3413 import ecb_decrypt, ecb_encrypt, pad3, unpad2
 from pygost.utils import hexdec, hexenc
-from pygost.gost3413 import ecb_encrypt, ecb_decrypt, pad3, unpad2
-from ..utils.def_bin import str_to_bytes, bytes_to_str
+
+from ..utils.def_bin import bytes_to_str, str_to_bytes
 
 
 def encrypt_ecb(text: str, key: str) -> str:
@@ -26,8 +27,8 @@ def decrypt_ecb(text: str, key: str, _return="str") -> str:
 
 
 def main():
-    from ..utils.print import print_header, print_kv
     from ..utils.data import text_1000
+    from ..utils.print import print_header, print_kv
 
     key = "ffeeddccbbaa99887766554433221100f0f1f2f3f4f5f6f7f8f9fafbfcfdfeff"
     plaintext = "92def06b3c130a59"

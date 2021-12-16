@@ -1,8 +1,9 @@
-from random import randint
 from dataclasses import dataclass
+from random import randint
 from typing import List
-from ..utils.math import inverse_of
+
 from ..utils.def_str import clear_text, to_indexes, to_symbols
+from ..utils.math import inverse_of
 
 
 @dataclass

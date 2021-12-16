@@ -295,7 +295,8 @@ class AES:
 
 import os
 from hashlib import pbkdf2_hmac
-from hmac import new as new_hmac, compare_digest
+from hmac import compare_digest
+from hmac import new as new_hmac
 
 AES_KEY_SIZE = 16
 HMAC_KEY_SIZE = 16
@@ -372,6 +373,7 @@ def decrypt(key, ciphertext, workload=100000):
 
 __all__ = [encrypt, decrypt, AES]
 
+
 def main():
     from ..utils.print import print_kv
 
@@ -386,6 +388,7 @@ def main():
     # b"\x39\x25\x84\x1D\x02\xDC\x09\xFB\xDC\x11\x85\x97\x19\x6A\x0B\x32",
 
     import os
+
     from ..utils.data import text_1000, text_test
 
     key = os.urandom(16)
@@ -403,5 +406,6 @@ def main():
     print_kv("Шифровка 1000", enc.hex())
     print_kv("Расшифрока", dec.decode())
 
+
 if __name__ == "__main__":
-    main();
+    main()

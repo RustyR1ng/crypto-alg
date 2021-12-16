@@ -1,4 +1,5 @@
 import numpy as np
+
 from ..utils.data import alph, grid_kardano
 from ..utils.def_str import REPLACES, clear_text, random_char
 

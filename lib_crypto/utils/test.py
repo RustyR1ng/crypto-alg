@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
+import inspect
 from types import FunctionType
 
-import inspect
 from .print import *
 
 

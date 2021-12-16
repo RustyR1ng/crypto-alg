@@ -8,31 +8,32 @@ class MODE:
     ENCRYPT = 0
     DECRYPT = 1
 
+
 class NAME:
-    Atbash="Attbash"
-    Cesar="Cesar"
-    Polibiy="Polibiy"
-    Belazo="Belazo"
-    Tritemi="Tritemi"
-    Vizhiner="Vizhiner"
-    Matrix="Matrix"
-    Playfair="Playfair"
-    Kardano="Kardano"
-    Permutations="Permutations"
-    Note_Shenon="Note Shenon"
-    A5_1="A5/1"
-    AES="AES"
-    Kuznyechick_ECB="Kuznyechick"
-    Magma_CTR="Magma CTR"
-    Magma_ECB="Magma ECB"
+    Atbash = "Attbash"
+    Cesar = "Cesar"
+    Polibiy = "Polibiy"
+    Belazo = "Belazo"
+    Tritemi = "Tritemi"
+    Vizhiner = "Vizhiner"
+    Matrix = "Matrix"
+    Playfair = "Playfair"
+    Kardano = "Kardano"
+    Permutations = "Permutations"
+    Note_Shenon = "Note Shenon"
+    A5_1 = "A5/1"
+    AES = "AES"
+    Kuznyechick_ECB = "Kuznyechick"
+    Magma_CTR = "Magma CTR"
+    Magma_ECB = "Magma ECB"
     ECC = "ECC"
-    Elagamal="Elgamal"
-    RSA="RSA"
-    Elgamal_ECP="Elgamal ECP"
-    RSA_ECP="RSA ECP"
-    GOST_94="GOST R 34 10 94"
-    GOST_2012="GOST R 34 10 2012"
-    Diffie_Hellman="Diffie Hellman"
+    Elagamal = "Elgamal"
+    RSA = "RSA"
+    Elgamal_ECP = "Elgamal ECP"
+    RSA_ECP = "RSA ECP"
+    GOST_94 = "GOST R 34 10 94"
+    GOST_2012 = "GOST R 34 10 2012"
+    Diffie_Hellman = "Diffie Hellman"
 
 
 def get_algs():
@@ -118,5 +119,10 @@ def params_required(alg):
     return alg in []
 
 
-def get_result(text, alg, mode, key=None,):
+def get_result(
+    text,
+    alg,
+    mode,
+    key=None,
+):
     return get_algs()[alg][mode](text, key=key)

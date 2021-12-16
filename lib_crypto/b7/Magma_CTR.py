@@ -1,7 +1,8 @@
 from pygost.gost3412 import GOST3412Magma as Magma
-from pygost.utils import hexdec, hexenc
 from pygost.gost3413 import ctr
-from ..utils.def_bin import str_to_bytes, bytes_to_str
+from pygost.utils import hexdec, hexenc
+
+from ..utils.def_bin import bytes_to_str, str_to_bytes
 
 
 def ctr_encrypt(text: str, key: str, iv: str) -> str:
@@ -24,8 +25,8 @@ def ctr_decrypt(text: str, key: str, iv: str, _return="str") -> str:
 
 
 def main():
-    from ..utils.print import print_header, print_kv
     from ..utils.data import text_1000
+    from ..utils.print import print_header, print_kv
 
     key = "ffeeddccbbaa99887766554433221100f0f1f2f3f4f5f6f7f8f9fafbfcfdfeff"
     IV = "12345678"

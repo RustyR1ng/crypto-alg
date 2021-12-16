@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-from re import match
-from operator import xor
-from functools import reduce
-from ..utils.def_bin import to_binary, bin_to_str
 from dataclasses import dataclass
+from functools import reduce
+from operator import xor
+from re import match
 from typing import List
+
+from ..utils.def_bin import bin_to_str, to_binary
 
 
 @dataclass
@@ -131,6 +132,7 @@ def main():
 
     crypter = Crypter(REGS_CONF)
     test_crypt(crypter.enc, crypter.dec)
+
 
 if __name__ == "__main__":
     main()

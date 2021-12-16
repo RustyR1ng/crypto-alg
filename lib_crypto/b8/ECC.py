@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+
 from ..utils.ElepticCurve import ElepticCurve, Point
 from ..utils.math import inverse_of
 

@@ -19,11 +19,12 @@ D=(1 MOD φ(N))/E.
 """
 __all__ = ["generate_ecp", "check", "main"]
 
-from ..utils.print import print_kv
-from ..utils.math import inverse_of, co_prime
-from ..utils.def_str import clear_text
 from sympy import isprime
+
+from ..utils.def_str import clear_text
 from ..utils.hash import hash
+from ..utils.math import co_prime, inverse_of
+from ..utils.print import print_kv
 
 p, q, e, d = 3557, 2579, 3, 25  # example
 
@@ -54,7 +55,7 @@ def check(msg, ecp, e=e, n=p * q):
 
 
 def main():
-    from ..utils.data import text_test, text_1000
+    from ..utils.data import text_1000, text_test
 
     p, q, e, d = 7, 17, 7, 25
     h = 10

@@ -1,6 +1,8 @@
-from .def_str import is_hex
-from pygost.utils import hexdec, hexenc
 from typing import List
+
+from pygost.utils import hexdec, hexenc
+
+from .def_str import is_hex
 
 
 def to_binary(plain: str) -> List[int]:

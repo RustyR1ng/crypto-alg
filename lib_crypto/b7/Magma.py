@@ -15,7 +15,7 @@ def decrypt(text: str, key: str) -> str:
 
 
 def main():
-    from ..utils.print import print_kv, print_header
+    from ..utils.print import print_header, print_kv
 
     print_header("Пример из ГОСТ Р 34.12-2015")
 

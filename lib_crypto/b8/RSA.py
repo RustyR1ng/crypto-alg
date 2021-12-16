@@ -1,7 +1,7 @@
 from typing import List
 
-from ..utils.math import inverse_of
 from ..utils.def_str import clear_text, to_indexes, to_symbols
+from ..utils.math import inverse_of
 
 
 class RSA:

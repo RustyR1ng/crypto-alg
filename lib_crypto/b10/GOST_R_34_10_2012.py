@@ -1,9 +1,9 @@
 from pygost.gost3410 import GOST3410Curve, sign, verify
-from pygost.utils import hexenc, hexdec, bytes2long
-from lib_crypto.utils.def_str import clear_text, is_hex
+from pygost.utils import bytes2long, hexdec, hexenc
 
-from lib_crypto.utils.print import print_header, print_kv
+from lib_crypto.utils.def_str import clear_text, is_hex
 from lib_crypto.utils.hash import hash as h
+from lib_crypto.utils.print import print_header, print_kv
 
 
 def get_hash(msg_or_hash):

@@ -1,9 +1,12 @@
 from typing import Union
+
 from sympy import isprime
 
-from ..utils.hash import hash
 from ..utils.def_str import clear_text as ct
-from ..utils.math import co_prime, extended_euclidean_algorithm as EEA, inverse_of
+from ..utils.hash import hash
+from ..utils.math import co_prime
+from ..utils.math import extended_euclidean_algorithm as EEA
+from ..utils.math import inverse_of
 
 
 class Elgaml_ECP:

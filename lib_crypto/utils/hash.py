@@ -1,4 +1,4 @@
-from .def_str import to_indexes, clear_text
+from .def_str import clear_text, to_indexes
 
 
 def hash(msg: str, p: int = 11) -> int:

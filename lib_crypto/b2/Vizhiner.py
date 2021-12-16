@@ -1,5 +1,5 @@
-from .Belazo import create_row
 from ..utils.data import alph
+from .Belazo import create_row
 
 
 def enc(text, alph=alph, key="л", **kwargs):

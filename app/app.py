@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 
-from flask import Flask, request, jsonify
-from lib_crypto import (
-    get_algs,
-    key_required,
-    get_result,
-    alph_required,
-    params_required,
-    MODE,
-)
+from flask import Flask, jsonify, request
 from flask_cors import CORS
-from lib_crypto.utils.data import alph
 
+from lib_crypto import (
+    MODE,
+    alph_required,
+    get_algs,
+    get_result,
+    key_required,
+    params_required,
+)
+from lib_crypto.utils.data import alph
 
 app = Flask(__name__)
 CORS(app)
