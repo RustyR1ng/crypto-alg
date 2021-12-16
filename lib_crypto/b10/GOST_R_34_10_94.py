@@ -39,8 +39,6 @@ from ..utils.def_str import clear_text as ct
 # from random import getrandbits as randbits, randint, choice
 from ..utils.hash import hash
 
-import pygost
-
 # RANGE_P = list(chain(range(509, 512), range(1020, 1024)))
 # RANGE_Q = list(range(254, 256))
 
