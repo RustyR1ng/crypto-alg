@@ -10,9 +10,9 @@ pygost = "~=5.7"
 sympy = "*"
 Flask = "*"
 Flask-Cors = "*"
+gunicorn = "*"
 
 [dev-packages]
-gunicorn = "*"
 black = {extras = ["jupyter"], version = "*"}
 flake8 = "*"
 wemake-python-styleguide = "*"

@@ -1,6 +1,5 @@
 .env
 env
-*.lock
 *cache*
 .vscode
 .idea
