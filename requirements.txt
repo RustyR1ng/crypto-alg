@@ -1,7 +1,0 @@
-numpy==1.21.4
-rich==10.15.1
-pygost==5.7
-sympy==1.9
-Flask==2.0.2
-flask-cors==3.0.10
-gunicorn

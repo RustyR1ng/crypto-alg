@@ -1,0 +1,12 @@
+[tool.black]
+exclude = '''
+/(
+    \.git
+  | .tox
+  | .venv
+)/
+'''
+
+[tool.isort]
+profile = "black"
+skip_glob = [".git/*",".venv"]

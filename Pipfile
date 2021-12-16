@@ -1,0 +1,29 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+numpy = "*"
+rich = "*"
+pygost = "~=5.7"
+sympy = "*"
+Flask = "*"
+Flask-Cors = "*"
+
+[dev-packages]
+gunicorn = "*"
+black = {extras = ["jupyter"], version = "*"}
+flake8 = "*"
+wemake-python-styleguide = "*"
+isort = "*"
+
+[scripts]
+flakeapp = "flake8 ./app"
+isort = "isort ."
+black = "black ."
+format = "bash -c 'pipenv run black && pipenv run isort'"
+dev = "flask run --reload"
+
+[requires]
+python_version = "3.7"
