@@ -21,56 +21,59 @@ __all__ = ["generate_ecp", "check", "main"]
 
 from sympy import isprime
 
-from ..utils.def_str import clear_text
-from ..utils.hash import hash
+from ..utils.def_str import clear_text as ct
+from ..utils.hash import kv_hash
 from ..utils.math import co_prime, inverse_of
-from ..utils.print import print_kv
+from ..utils.printing import print_kv
 
 p, q, e, d = 3557, 2579, 3, 25  # example
 
 
-def generate_ecp(msg, p=p, q=q, e=e):
+def enc(text: str, P: str, Q: str, E: str) -> int:
+    P, Q, E = map(int, (P, Q, E))
+    assert all(isprime(i) for i in (P, Q)), "Числа P и Q должны быть простыми"
 
-    assert all(isprime(i) for i in (p, q)), "Числа P и Q должны быть простыми"
+    n = P * Q
+    assert 1 < len(text) < n, "Длина сообщения должна ∈ (1,n)"
 
-    n = p * q
-    assert 1 < len(msg) < n, "Длина сообщения должна ∈ (1,n)"
+    text = ct(text)
 
-    h = hash(msg)
+    h = kv_hash(text)
     print_kv("Hash", h)
 
-    euler = (p - 1) * (q - 1)  # Функция Эйлера
-    assert co_prime(e, euler), "Числа E и φ(N) должны быть взаимно простыми"
+    euler = (P - 1) * (Q - 1)  # Функция Эйлера
+    assert co_prime(E, euler), "Числа E и φ(N) должны быть взаимно простыми"
 
-    d = inverse_of(e, euler)
+    d = inverse_of(E, euler)
 
     return (h ** d) % n
 
 
-def check(msg, ecp, e=e, n=p * q):
-    h_1 = hash(msg)
-    h = (ecp ** e) % n
+# n = p*q
+def dec(text: str, ecp: str, E: str, N: str):
+    ecp, E, N = map(int, (ecp, E, N))
+
+    text = ct(text)
+
+    h_1 = kv_hash(text)
+    h = (ecp ** E) % N
 
     return h == h_1
 
 
 def main():
-    from ..utils.data import text_1000, text_test
+    from ..data import text_1000, text_test
 
-    p, q, e, d = 7, 17, 7, 25
-    h = 10
+    P, Q, E = 7, 17, 7
 
-    msg = clear_text(text_test)
-    ecp = generate_ecp(msg)
-    chk = check(msg, ecp)
+    ecp = enc(text_test, P, Q, E)
+    chk = dec(text_test, ecp, E, P * Q)
 
     print_kv("Подпись для пословицы", ecp)
     print_kv("Проверяем подпись", chk)
 
-    msg = clear_text(text_1000)
-
-    ecp = generate_ecp(msg)
-    chk = check(msg, ecp)
+    ecp = enc(text_1000, P, Q, E)
+    chk = dec(text_1000, ecp, E, P * Q)
 
     print_kv("Подпись для 1000", ecp)
     print_kv("Проверяем подпись", chk)

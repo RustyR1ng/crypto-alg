@@ -18,10 +18,10 @@
 KA = KB = K
 """
 
-from ..utils.print import print_kv
+from ..utils.printing import print_kv
 
 
-def gen(n, a, priv_key_A, priv_key_B):
+def gen(n: int, a: int, priv_key_A: int, priv_key_B: int) -> int:
     assert 1 < a < n
     assert all(2 < i < (n - 1) for i in (priv_key_A, priv_key_B))  # private keys
 

@@ -23,6 +23,10 @@ def gen_x(p):
     return randint(2, p - 1)
 
 
+def check_x(x, p):
+    assert 2 < x < p - 1
+
+
 def gen_y(g, x, p):
 
     return (g ** x) % p
@@ -37,11 +41,8 @@ def gen_keys(p, g, x=None):
 
 
 class Elgamal:
-    def __init__(self, p: int, g: int, x: int = None):
-        self.open_key, self.priv_key = gen_keys(p, g, x)
-
-    def __init__(self, open_key, priv_key):
-        self.open_key, self.priv_key = open_key, priv_key
+    def __init__(self):
+        pass
 
     def __str__(self):
         return "\n".join(
@@ -52,7 +53,7 @@ class Elgamal:
             ]
         )
 
-    def enc(self, msg: str, k=None):
+    def enc(self, msg: str, k=None) -> str:
 
         p, g, y = self.open_key.p, self.open_key.g, self.open_key.y
 
@@ -60,31 +61,55 @@ class Elgamal:
         enc_m = []
 
         for num in msg:
-            k = randint(2, p - 2) if not k else k
+            k = randint(2, p - 2)
             a = (g ** k) % p
             b = ((y ** k) * num) % p
 
             enc_m.append(a)
             enc_m.append(b)
+        enc_m = " ".join(list(map(str, enc_m)))
         return enc_m
 
-    def dec(self, e_msg: List[int]):
-        x, p = self.priv_key.x, self.open_key.p
+    def dec(self, e_msg: str, p=None) -> str:
+        e_msg = list(map(int, e_msg.split(" ")))
+        p = p if p else self.open_key.p
+        x = self.priv_key.x
         d_msg = []
 
         for i in range(0, len(e_msg), 2):
 
             a, b = e_msg[i], e_msg[i + 1]
             d_msg.append(((inverse_of(a ** x, p) * b)) % p)
-
+        print(d_msg)
         return to_symbols(d_msg)
 
 
+def enc(text: str, p: str, g: str, y: str) -> str:
+    p, g, y = int(p), int(g), int(y)
+    open_key = OpenKey(p, g, y)
+
+    crypter = Elgamal()
+    crypter.open_key = open_key
+
+    return crypter.enc(text)
+
+
+def dec(text: str, p: str, x: str) -> str:
+    p, x = int(p), int(x)
+    priv_key = PrivKey(x)
+
+    crypter = Elgamal()
+    crypter.priv_key = priv_key
+
+    return crypter.dec(text, p)
+
+
 def main():
-    from ..utils.test import test_crypt
+    from ..tests.test import test_crypt
 
-    crypter = Elgamal(OpenKey(37, 2, 35), PrivKey(19))
-
+    crypter = Elgamal()
+    crypter.open_key = OpenKey(37, 2, 35)
+    crypter.priv_key = PrivKey(19)
     test_crypt(crypter.enc, crypter.dec)
 
 

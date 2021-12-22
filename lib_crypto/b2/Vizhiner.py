@@ -1,22 +1,27 @@
-from ..utils.data import alph
+from ..data import default_alph
 from .Belazo import create_row
 
+DEFAULT_KEY = "л"
 
-def enc(text, alph=alph, key="л", **kwargs):
 
+def check_key(key: str) -> None:
     assert len(key) == 1, "Длина ключа должна быть равна 1"
+
+
+def enc(text: str, alph: str = default_alph, key: str = DEFAULT_KEY, **kwargs) -> str:
+    check_key(key)
 
     # alph += " ,:-."
     result = []
     gamma = [key]
 
     for sym in text:
-
         sym = sym.lower()
+
         if sym not in alph:
             continue
-        col_index = alph.index(sym)
 
+        col_index = alph.index(sym)
         row = create_row(gamma[-1], alph)
 
         enc_sym = row[col_index]
@@ -27,14 +32,14 @@ def enc(text, alph=alph, key="л", **kwargs):
     return "".join(result)
 
 
-def dec(text, alph=alph, key="л", **kwargs):
+def dec(text: str, alph: str = default_alph, key: str = DEFAULT_KEY, **kwargs) -> str:
+    check_key(key)
 
     # alph += " ,:-."
     result = []
     gamma = key + text
 
     for i, sym in enumerate(text):
-
         sym = sym.lower()
 
         if sym not in alph:
@@ -51,7 +56,7 @@ def dec(text, alph=alph, key="л", **kwargs):
 
 
 def main():
-    from ..utils.test import test_crypt
+    from ..tests.test import test_crypt
 
     test_crypt(enc, dec)
 

@@ -4,8 +4,7 @@ from pygost.gost3413 import ecb_decrypt, ecb_encrypt, pad2, unpad2
 from pygost.utils import hexdec, hexenc
 
 from ..utils.def_bin import bytes_to_str, str_to_bytes
-from ..utils.def_str import is_hex
-from ..utils.print import *
+from ..utils.printing import *
 
 HEX_KEY = "8899aabbccddeeff0011223344556677fedcba98765432100123456789abcdef"
 BLOCK_SIZE = Crypter.blocksize
@@ -55,7 +54,7 @@ def dec(text: str, key: str = HEX_KEY, _return: str = "str") -> str:
 
 
 def main():
-    from ..utils.test import test_crypt
+    from ..tests.test import test_crypt
 
     print_header("Примеры из GOST_R_34_13-2015")
     print_kv("Ключ", HEX_KEY)

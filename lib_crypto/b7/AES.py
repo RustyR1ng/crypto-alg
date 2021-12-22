@@ -320,7 +320,7 @@ def get_key_iv(password, salt, workload=100000):
     return aes_key, hmac_key, iv
 
 
-def encrypt(key, plaintext, workload=100000):
+def encrypt(key, text, workload=100000):
     """
     Encrypts `plaintext` with `key` using AES-128, an HMAC to verify integrity,
     and PBKDF2 to stretch the given key.
@@ -329,19 +329,19 @@ def encrypt(key, plaintext, workload=100000):
     """
     if isinstance(key, str):
         key = key.encode("utf-8")
-    if isinstance(plaintext, str):
-        plaintext = plaintext.encode("utf-8")
+    if isinstance(text, str):
+        text = text.encode("utf-8")
 
     salt = os.urandom(SALT_SIZE)
     key, hmac_key, iv = get_key_iv(key, salt, workload)
-    ciphertext = AES(key).encrypt_cbc(plaintext, iv)
+    ciphertext = AES(key).encrypt_cbc(text, iv)
     hmac = new_hmac(hmac_key, salt + ciphertext, "sha256").digest()
     assert len(hmac) == HMAC_SIZE
 
     return hmac + salt + ciphertext
 
 
-def decrypt(key, ciphertext, workload=100000):
+def decrypt(key, text, workload=100000):
     """
     Decrypts `ciphertext` with `key` using AES-128, an HMAC to verify integrity,
     and PBKDF2 to stretch the given key.
@@ -349,10 +349,10 @@ def decrypt(key, ciphertext, workload=100000):
     The exact algorithm is specified in the module docstring.
     """
 
-    assert len(ciphertext) % 16 == 0, "Ciphertext must be made of full 16-byte blocks."
+    assert len(text) % 16 == 0, "Ciphertext must be made of full 16-byte blocks."
 
     assert (
-        len(ciphertext) >= 32
+        len(text) >= 32
     ), """
     Ciphertext must be at least 32 bytes long (16 byte salt + 16 byte block). To
     encrypt or decrypt single blocks use `AES(key).decrypt_block(ciphertext)`.
@@ -361,21 +361,29 @@ def decrypt(key, ciphertext, workload=100000):
     if isinstance(key, str):
         key = key.encode("utf-8")
 
-    hmac, ciphertext = ciphertext[:HMAC_SIZE], ciphertext[HMAC_SIZE:]
-    salt, ciphertext = ciphertext[:SALT_SIZE], ciphertext[SALT_SIZE:]
+    hmac, text = text[:HMAC_SIZE], text[HMAC_SIZE:]
+    salt, text = text[:SALT_SIZE], text[SALT_SIZE:]
     key, hmac_key, iv = get_key_iv(key, salt, workload)
 
-    expected_hmac = new_hmac(hmac_key, salt + ciphertext, "sha256").digest()
+    expected_hmac = new_hmac(hmac_key, salt + text, "sha256").digest()
     assert compare_digest(hmac, expected_hmac), "Ciphertext corrupted or tampered."
 
-    return AES(key).decrypt_cbc(ciphertext, iv)
+    return AES(key).decrypt_cbc(text, iv)
 
 
-__all__ = [encrypt, decrypt, AES]
+def enc(text: str, iv: str, key: str) -> str:
+    return AES(key).encrypt_cbc(text.encode(), iv)
+
+
+def dec(text: str, iv: str, key: str) -> str:
+    return AES(key).decrypt_cbc(text, iv)
+
+
+__all__ = ["enc", "dec", "AES"]
 
 
 def main():
-    from ..utils.print import print_kv
+    from ..utils.printing import print_kv
 
     message = b"\x32\x43\xF6\xA8\x88\x5A\x30\x8D\x31\x31\x98\xA2\xE0\x37\x07\x34"
     key = b"\x2B\x7E\x15\x16\x28\xAE\xD2\xA6\xAB\xF7\x15\x88\x09\xCF\x4F\x3C"
@@ -389,7 +397,7 @@ def main():
 
     import os
 
-    from ..utils.data import text_1000, text_test
+    from ..data import text_1000, text_test
 
     key = os.urandom(16)
     iv = os.urandom(16)

@@ -1,8 +1,9 @@
-from ..utils.data import alph
+from typing import List
+
+from ..data import default_alph
 
 
-def alph_to_sq(alph, cols=6):
-
+def alph_to_sq(alph: str) -> List[List[str]]:
     from math import ceil, sqrt
 
     n = ceil((sqrt(len(alph))))  # получение размера квадратной матрицы
@@ -11,7 +12,7 @@ def alph_to_sq(alph, cols=6):
     return sq
 
 
-def enc(text, alph=alph, **kwargs):
+def enc(text: str, alph: str = default_alph, **kwargs) -> str:
 
     answer = []
     sq = alph_to_sq(alph)
@@ -28,7 +29,7 @@ def enc(text, alph=alph, **kwargs):
     return " ".join(answer)
 
 
-def dec(text, alph=alph, **kwargs):
+def dec(text: str, alph: str = default_alph, **kwargs) -> str:
     text = text.split()
     sq = alph_to_sq(alph)
 
@@ -36,8 +37,7 @@ def dec(text, alph=alph, **kwargs):
 
 
 def main():
-
-    from ..utils.test import test_crypt
+    from ..tests.test import test_crypt
 
     test_crypt(enc, dec)
 

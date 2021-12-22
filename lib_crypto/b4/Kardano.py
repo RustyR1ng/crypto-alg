@@ -1,10 +1,10 @@
 import numpy as np
 
-from ..utils.data import alph, grid_kardano
-from ..utils.def_str import REPLACES, clear_text, random_char
+from ..data import default_alph, grid_kardano
+from ..utils.def_str import clear_text, random_char
 
 
-def paste_values(text, template_grid, grid, alph=alph):
+def paste_values(text: str, template_grid, grid, alph=default_alph):
     indexes = np.argwhere(template_grid == 1)
 
     for row, col in indexes:
@@ -25,7 +25,7 @@ def get_templates(grid):
     return templates
 
 
-def fill_grid(text, template_grid, grid, alph=alph):
+def fill_grid(text, template_grid, grid, alph=default_alph):
 
     for template in get_templates(template_grid):
         grid, text = paste_values(text, template, grid, alph)
@@ -33,7 +33,7 @@ def fill_grid(text, template_grid, grid, alph=alph):
     return grid
 
 
-def enc(text, alph=alph, template_grid=grid_kardano, **kwargs):
+def enc(text, alph=default_alph, template_grid=grid_kardano, **kwargs):
     size = len(template_grid) * len(template_grid[0])
 
     assert (
@@ -45,7 +45,7 @@ def enc(text, alph=alph, template_grid=grid_kardano, **kwargs):
     return ",".join(enc_block(text[i : i + size]) for i in range(0, len(text), size))
 
 
-def enc_block(text, alph=alph, template_grid=grid_kardano, **kwargs):
+def enc_block(text, alph=default_alph, template_grid=grid_kardano, **kwargs):
     text = clear_text(text, alph)
     template_grid = np.array(template_grid)
 
@@ -65,12 +65,12 @@ def get_text(grid, template_grid):
     return text
 
 
-def dec(grids, alph=alph, template_grid=grid_kardano, **kwarg):
-    grids = grids.split(",")
+def dec(text, alph=default_alph, template_grid=grid_kardano, **kwarg):
+    grids = text.split(",")
     return "".join(dec_block(grid, alph, template_grid) for grid in grids)
 
 
-def dec_block(grid, alph=alph, template_grid=grid_kardano, **kwargs):
+def dec_block(grid, alph=default_alph, template_grid=grid_kardano, **kwargs):
     grid = [list(row) for row in grid.split()]
     template_grid = np.array(template_grid)
 
@@ -82,7 +82,7 @@ def dec_block(grid, alph=alph, template_grid=grid_kardano, **kwargs):
 
 
 def main():
-    from ..utils.test import test_crypt
+    from ..tests.test import test_crypt
 
     test_crypt(enc, dec)
 

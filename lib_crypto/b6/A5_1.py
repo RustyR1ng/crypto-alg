@@ -30,7 +30,7 @@ class Crypter:
         self.conf = conf
         self.regs = None
 
-    def configure(self, len_msg: int, key: str):
+    def configure(self, len_msg: int, key: str) -> List[int]:
         key = set_key(key)
         regs = get_registers(key, self.conf)
         keystream = get_keystream(len_msg, regs, self.conf)
@@ -41,7 +41,7 @@ class Crypter:
         self,
         msg: str,
         key: str = "0101001000011010110001110001100100101001000000110111111010110111",
-    ):
+    ) -> str:
         binary = to_binary(msg)
         keystream = self.configure(len(binary), key)
         res = [binary[i] ^ keystream[i] for i in range(len(binary))]
@@ -124,11 +124,19 @@ def get_keystream(
 
 
 # Example of 64-bit key: 0101001000011010110001110001100100101001000000110111111010110111
+def enc(text: str, key: str, conf=REGS_CONF) -> str:
+    crypter = Crypter(conf)
+    return crypter.enc(text, key)
+
+
+def dec(text: str, key: str, conf=REGS_CONF) -> str:
+    crypter = Crypter(conf)
+    return crypter.dec(text, key)
 
 
 def main():
 
-    from ..utils.test import test_crypt
+    from ..tests.test import test_crypt
 
     crypter = Crypter(REGS_CONF)
     test_crypt(crypter.enc, crypter.dec)

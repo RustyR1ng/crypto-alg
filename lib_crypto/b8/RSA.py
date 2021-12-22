@@ -66,7 +66,7 @@ class RSA:
 
 
 def main():
-    from ..utils.test import test_crypt
+    from ..tests.test import test_crypt
 
     encrypter = RSA((23, 247), (47, 247))
     test_crypt(encrypter.enc, encrypter.dec)

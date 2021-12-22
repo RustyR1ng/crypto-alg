@@ -1,6 +1,6 @@
 import numpy as np
 
-from ..utils.data import alph
+from ..data import default_alph
 from ..utils.def_str import clear_text, to_indexes
 
 
@@ -18,7 +18,7 @@ def get_text_matrix(text, cols):
     return reverse_rows(matrix)
 
 
-def get_key(key, alph=alph):
+def get_key(key, alph=default_alph):
 
     key = to_indexes(key, alph)
     key = [sorted(key).index(i) for i in key]
@@ -26,7 +26,7 @@ def get_key(key, alph=alph):
     return key
 
 
-def enc(text, alph=alph, key="год"):
+def enc(text, alph=default_alph, key="год"):
 
     text = clear_text(text, alph)
     cols = len(key)
@@ -38,7 +38,7 @@ def enc(text, alph=alph, key="год"):
     return "".join(result)
 
 
-def dec(text, alph=alph, key="год"):
+def dec(text, alph=default_alph, key="год"):
 
     text = clear_text(text, alph)
     cols = len(key)
@@ -60,7 +60,7 @@ def dec(text, alph=alph, key="год"):
 
 
 def main():
-    from ..utils.test import test_crypt
+    from ..tests.test import test_crypt
 
     test_crypt(enc, dec)
 

@@ -1,4 +1,7 @@
-def extended_euclidean_algorithm(a: int, b: int) -> (int, int, int):
+from typing import Union
+
+
+def extended_euclidean_algorithm(a: int, b: int) -> Union[int, int, int]:
     """
     Возвращает кортеж из трёх элементов (gcd, x, y), такой, что
     a * x + b * y == gcd, где gcd - наибольший
@@ -29,7 +32,9 @@ def inverse_of(n: int, p: int) -> int:
     (n * m) % p == 1.
     """
     gcd, x, y = extended_euclidean_algorithm(n, p)
-    assert (n * x + p * y) % p == gcd
+    assert (
+        n * x + p * y
+    ) % p == gcd, "Ошибка при вычислении обратной величины n по модулю p"
 
     if gcd != 1:
         # Или n равно 0, или p не является простым.

@@ -29,95 +29,75 @@ u = ((а^z1 * у^z2 ) mod р) mod q.
 5. Если u = r, то подпись считается верной.
 """
 
-from dataclasses import dataclass
-from itertools import chain
 from typing import Union
 
-from ..utils.def_bin import count_bits_in_num as cbin
 from ..utils.def_str import clear_text as ct
-
-# from random import getrandbits as randbits, randint, choice
-from ..utils.hash import hash
-from ..utils.math import primes, random_of_ranges
-
-# RANGE_P = list(chain(range(509, 512), range(1020, 1024)))
-# RANGE_Q = list(range(254, 256))
+from ..utils.hash import kv_hash
+from ..utils.math import primes
 
 
-@dataclass
-class PubKey:
-    p: int  # = randbits(choice(RANGE_P))
-    q: int  # = randbits(choice(RANGE_Q))
-    a: int
+def get_hash(
+    message: str,
+    q: int,
+    h: int = None,
+):
+    hashed_m = h if h else kv_hash(message)
+    hashed_m = 1 if hashed_m % q == 0 else hashed_m
 
-    def __post_init__(self):
-        p, a, q = self.p, self.a, self.q
-
-        # assert cbin(p) in RANGE_P
-        assert q in primes(p - 1)  # and cbin(p) in RANGE_Q
-        assert (a ** q) % p == 1 and 1 < a < (p - 1)
+    return hashed_m
 
 
-class GOST94_ECP:
-    def __init__(self, pub_key: PubKey, x: int = None, y: int = None):
-        self.pub_key = pub_key
-        if x:
-            assert x < pub_key.q
-            self.x = x
-            self.y = (pub_key.a ** x) % pub_key.p
-        elif y:
-            self.y = y
+def enc(text: str, P: str, Q: str, A: str, X: str, K: str, h: int = None):
+    P, Q, A, X, K = map(int, (P, Q, A, X, K))
+    assert Q in primes(P - 1), "Q должно быть множителем для P-1"
+    assert (A ** Q) % P == 1, "Условие (a**q)%p==1 не соблюдено"
+    assert 1 < A < (P - 1), "A должно ∈ (1, P-1)"
+    assert X < Q, "X должно быть < Q"
+    assert K < Q, "K должно быть < Q"
 
-    def get_hash(self, message: str, h: int = None):
-        hashed_m = h if h else hash(message)
-        hashed_m = 1 if hashed_m % self.pub_key.q == 0 else hashed_m
+    text = ct(text)
 
-        return hashed_m
+    text_hash = get_hash(text, Q, h)
 
-    def generate_ecp(self, message: str, k: int, h: int = None) -> Union[int, int]:
-        message = ct(message)
-        p, q, a, x = self.pub_key.p, self.pub_key.q, self.pub_key.a, self.x
-        assert k < q
+    r = ((A ** K) % P) % Q
+    assert r != 0, "R не должен = 0. Попробуйте ввести другие параметры"
 
-        r = ((a ** k) % p) % q
-        assert r != 0
+    s = (X * r + K * text_hash) % Q
+    return f"{r},{s}"
 
-        hashed_m = self.get_hash(message, h)
-        s = (x * r + k * hashed_m) % q
 
-        return r, s
+# y = (pub_key.a ** x) % pub_key.p
+def dec(text: str, P: str, Q: str, A: str, Y: str, ecp: str, h: int = None):
+    r, s = map(int, ecp.split(","))
+    P, Q, Y, A = map(int, (P, Q, Y, A))
+    text = ct(text)
 
-    def check_ecp(self, message: str, r: int, s: int, h: int = None):
-        message = ct(message)
-        p, q, a, y = self.pub_key.p, self.pub_key.q, self.pub_key.a, self.y
+    hashed_m = get_hash(text, Q, h)
 
-        hashed_m = self.get_hash(message, h)
+    v = (hashed_m ** (Q - 2)) % Q
+    z1 = (s * v) % Q
+    z2 = ((Q - r) * v) % Q
+    u = ((A ** z1 * Y ** z2) % P) % Q
 
-        v = (hashed_m ** (q - 2)) % q
-        z1 = (s * v) % q
-        z2 = ((q - r) * v) % q
-        u = ((a ** z1 * y ** z2) % p) % q
-
-        return u == r
+    return u == r
 
 
 def main():
-    from ..utils.data import text_1000, text_test
-    from ..utils.print import print_kv
+    from ..data import text_1000, text_test
+    from ..utils.printing import print_kv
 
     p, q, a = 23, 11, 6
-    pk = PubKey(p, q, a)
+    k = 5
+    x = 8
+    y = (a ** x) % p
 
-    gost = GOST94_ECP(pk, 8)
-
-    r, s = gost.generate_ecp(text_test, 5)
-    chk = gost.check_ecp(text_test, r, s)
-
-    print_kv("Подпись пословицы", (r, s))
+    ecp = enc(text_test, p, q, a, x, k)
+    chk = dec(text_test, p, q, a, y, ecp)
+    print_kv("Подпись пословицы", ecp)
     print_kv("Проверка подписи", chk)
 
-    r, s = gost.generate_ecp(text_1000, 5)
-    chk = gost.check_ecp(text_1000, r, s)
+    ecp = enc(text_1000, p, q, a, x, k)
+    chk = dec(text_1000, p, q, a, y, ecp)
 
     print_kv("Подпись 1000", (r, s))
     print_kv("Проверка подписи", chk)

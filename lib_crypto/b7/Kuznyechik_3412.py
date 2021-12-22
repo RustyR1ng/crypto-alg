@@ -2,7 +2,7 @@ from pygost.gost3412 import GOST3412Kuznechik as Kuz
 from pygost.utils import hexdec, hexenc
 
 from ..utils.def_str import clear_text, is_hex, to_indexes, to_symbols
-from ..utils.print import *
+from ..utils.printing import *
 
 key = "ffeeddccbbaa99887766554433221100f0f1f2f3f4f5f6f7f8f9fafbfcfdfeff"
 

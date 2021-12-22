@@ -3,7 +3,7 @@
 import inspect
 from types import FunctionType
 
-from .print import *
+from ..utils.printing import *
 
 
 def get_default_args(func):
@@ -16,8 +16,8 @@ def get_default_args(func):
 
 
 def test_crypt(enc: FunctionType, dec: FunctionType) -> None:
-    from .data import text_1000, text_test
-    from .def_str import clear_text
+    from ..data import text_1000, text_test
+    from ..utils.def_str import clear_text
 
     text_test = clear_text(text_test)
     text_1000 = clear_text(text_1000)

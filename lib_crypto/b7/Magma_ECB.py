@@ -27,8 +27,8 @@ def decrypt_ecb(text: str, key: str, _return="str") -> str:
 
 
 def main():
-    from ..utils.data import text_1000
-    from ..utils.print import print_header, print_kv
+    from ..data import text_1000
+    from ..utils.printing import print_header, print_kv
 
     key = "ffeeddccbbaa99887766554433221100f0f1f2f3f4f5f6f7f8f9fafbfcfdfeff"
     plaintext = "92def06b3c130a59"

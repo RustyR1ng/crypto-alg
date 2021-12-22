@@ -1,26 +1,33 @@
+from typing import List
+
 import numpy as np
 
-from ..utils.data import alph
+from ..data import default_alph
 from ..utils.def_str import clear_text
 
-replace_symbol = "ф"
+REPLACE_SYMBOL = "ф"
 
 
-def get_key_matrix(key, alph, cols=8):
+class MODE:
+    ENCRYPT = 0
+    DECRYPT = 1
+
+
+def get_key_matrix(key: str, alph: str, cols: int = 8) -> np.ndarray:
     matrix_items = list(key + remove_items_in_str(alph, key))
     matrix = np.array(matrix_items).reshape(-1, cols)
 
     return matrix
 
 
-def remove_items_in_str(text, symbols):
+def remove_items_in_str(text: str, symbols: str) -> str:
     text = list(text)
     for symbol in symbols:
         text.remove(symbol)
     return "".join(text)
 
 
-def get_bygrams(text):
+def get_bygrams(text: str) -> List[str]:
     bygrams, i = [], 0
 
     while i <= len(text) - 1:
@@ -29,9 +36,9 @@ def get_bygrams(text):
         i += 2
 
         if len(block) == 1:
-            block.append(replace_symbol)
+            block.append(REPLACE_SYMBOL)
         if block[0] == block[1]:
-            block[1] = replace_symbol
+            block[1] = REPLACE_SYMBOL
             i -= 1
 
         bygrams.append("".join(block))
@@ -39,15 +46,15 @@ def get_bygrams(text):
     return bygrams
 
 
-def get_row(item, matrix):
+def get_row(item: str, matrix: np.ndarray) -> np.ndarray:
     return np.argwhere(matrix == item)[0][0]
 
 
-def get_col(item, matrix):
+def get_col(item: str, matrix: np.ndarray) -> np.ndarray:
     return np.argwhere(matrix == item)[0][1]
 
 
-def check_rows(bygram, matrix):
+def check_rows(bygram: str, matrix: np.ndarray) -> bool:
 
     if get_row(bygram[0], matrix) == get_row(bygram[1], matrix):
         return True
@@ -55,7 +62,7 @@ def check_rows(bygram, matrix):
     return False
 
 
-def check_cols(bygram, matrix):
+def check_cols(bygram: str, matrix: np.ndarray) -> bool:
 
     if get_col(bygram[0], matrix) == get_col(bygram[1], matrix):
         return True
@@ -63,7 +70,7 @@ def check_cols(bygram, matrix):
     return False
 
 
-def pleif_row(bygram, matrix, mode="enc"):
+def pleif_row(bygram: str, matrix: np.ndarray, mode: int) -> List[str]:
     num_cols = matrix.shape[1]
     shift = 1 if mode == "enc" else -1
     return [
@@ -72,7 +79,7 @@ def pleif_row(bygram, matrix, mode="enc"):
     ]
 
 
-def pleif_col(bygram, matrix, mode="enc"):
+def pleif_col(bygram: str, matrix: np.ndarray, mode: int) -> List[str]:
     num_rows = matrix.shape[0]
     shift = 1 if mode == "enc" else -1
     return [
@@ -81,7 +88,7 @@ def pleif_col(bygram, matrix, mode="enc"):
     ]
 
 
-def pleif_square(bygram, matrix):
+def pleif_square(bygram: str, matrix: np.ndarray) -> List[str]:
 
     return [
         matrix[get_row(bygram[0], matrix), get_col(bygram[1], matrix)],
@@ -89,7 +96,7 @@ def pleif_square(bygram, matrix):
     ]
 
 
-def get_pleif(bygrams, key_matrix, mode="enc"):
+def get_pleif(bygrams: List[str], key_matrix: np.ndarray, mode: int) -> List[str]:
     result = []
 
     for bygram in bygrams:
@@ -108,32 +115,34 @@ def get_pleif(bygrams, key_matrix, mode="enc"):
     return result
 
 
-def enc(text, alph=alph, key="штурм"):
+def enc(text: str, alph: str = default_alph, key: str = "штурм") -> str:
+    mode = MODE.ENCRYPT
     alph = remove_items_in_str(alph, "ё")
     text = clear_text(text.lower(), alph)
 
     bygrams = get_bygrams(text)
     key_matrix = get_key_matrix(key, alph)
 
-    result = get_pleif(bygrams, key_matrix, "enc")
+    result = get_pleif(bygrams, key_matrix, mode)
 
     return "".join(result)
 
 
-def dec(text, alph=alph, key="штурм"):
+def dec(text: str, alph: str = default_alph, key: str = "штурм") -> str:
+    mode = MODE.DECRYPT
     alph = remove_items_in_str(alph, "ё")
     text = clear_text(text.lower(), alph)
 
     bygrams = get_bygrams(text)
     key_matrix = get_key_matrix(key, alph)
 
-    result = get_pleif(bygrams, key_matrix, "dec")
+    result = get_pleif(bygrams, key_matrix, mode)
 
     return "".join(result)
 
 
 def main():
-    from ..utils.test import test_crypt
+    from ..tests.test import test_crypt
 
     test_crypt(enc, dec)
 

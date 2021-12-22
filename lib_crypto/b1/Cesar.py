@@ -1,12 +1,14 @@
-from ..utils.data import alph
+from ..data import default_alph
 
 
-def alph_shift_func(alph, key=3):
-
+def alph_shift_func(alph: str, key: int) -> str:
     return "".join([alph[(alph.index(sym) + key) % len(alph)] for sym in alph])
 
 
-def enc(text, alph=alph, key=3, **kwargs):
+DEFAULT_KEY = "3"
+
+
+def enc(text: str, alph: str = default_alph, key: str = DEFAULT_KEY, **kwargs) -> str:
     key = int(key)
     alph_shift = alph_shift_func(alph, key)
 
@@ -15,7 +17,7 @@ def enc(text, alph=alph, key=3, **kwargs):
     )
 
 
-def dec(text, alph=alph, key=3, **kwargs):
+def dec(text: str, alph: str = default_alph, key: str = DEFAULT_KEY, **kwargs) -> str:
     key = int(key)
     alph_shift = alph_shift_func(alph, key)
 
@@ -25,8 +27,7 @@ def dec(text, alph=alph, key=3, **kwargs):
 
 
 def main():
-
-    from ..utils.test import test_crypt
+    from ..tests.test import test_crypt
 
     test_crypt(enc, dec)
 

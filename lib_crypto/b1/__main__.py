@@ -1,9 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from utils.data import alph, text_1000, text_test
-from utils.test import test_crypt
-
+from ..tests.test import test_crypt
 from .Atbash import dec, enc
 
 print("--------------------АТБАШ--------------------")

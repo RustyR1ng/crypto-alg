@@ -1,4 +1,4 @@
-from .data import alph
+from ..data import default_alph
 
 REPLACES = {
     ",": "ЗПТ",
@@ -8,24 +8,24 @@ REPLACES = {
 }
 
 
-def to_indexes(text, alph=alph):
+def to_indexes(text, alph=default_alph):
     return [alph.index(symbol) for symbol in text]
 
 
-def to_symbols(nums, alph=alph):
+def to_symbols(nums, alph=default_alph):
     return "".join([alph[num] for num in nums])
 
 
-def clear_text(text, alph=alph):
+def clear_text(text, alph=default_alph):
     import re
 
-    text = replace_special(text, alph)
+    text = replace_special(text)
     text = text.lower()
     text = re.sub(f"[^{alph}]", "", text)
     return text
 
 
-def replace_special(text, alph=alph, replaces=REPLACES):
+def replace_special(text, replaces=REPLACES):
 
     for key, value in replaces.items():
         text = text.replace(key, value)
@@ -41,7 +41,7 @@ def is_hex(s):
         return False
 
 
-def random_char(alph=alph):
+def random_char(alph=default_alph):
     from random import choice
 
     return choice(alph)

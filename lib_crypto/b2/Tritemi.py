@@ -1,12 +1,10 @@
-from ..utils.data import alph
+from ..data import default_alph
 
 
-def enc(text, alph=alph, **kwargs):
-
+def enc(text: str, alph: str = default_alph, **kwargs) -> str:
     result = []
 
     for i, sym in enumerate(text):
-
         if sym not in alph:
             result.append(sym)
             continue
@@ -21,12 +19,10 @@ def enc(text, alph=alph, **kwargs):
     return "".join(result)
 
 
-def dec(text, alph=alph, **kwargs):
-
+def dec(text: str, alph: str = default_alph, **kwargs) -> str:
     result = []
 
     for i, sym in enumerate(text):
-
         if sym not in alph:
             result.append(sym)
             continue
@@ -42,7 +38,7 @@ def dec(text, alph=alph, **kwargs):
 
 
 def main():
-    from ..utils.test import test_crypt
+    from ..tests.test import test_crypt
 
     test_crypt(enc, dec)
 
