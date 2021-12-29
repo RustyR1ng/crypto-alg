@@ -117,6 +117,10 @@ def get_algs():
             MODE.ENCRYPT: Elgamal_ECP.enc,
             MODE.DECRYPT: Elgamal_ECP.dec,
         },
+        NAME.RSA: {
+            MODE.ENCRYPT: RSA.enc,
+            MODE.DECRYPT: RSA.dec,
+        },
         NAME.RSA_ECP: {
             MODE.ENCRYPT: RSA_ECP.enc,
             MODE.DECRYPT: RSA_ECP.dec,
