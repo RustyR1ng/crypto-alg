@@ -22,8 +22,10 @@ from ..utils.printing import print_kv
 
 
 def gen(n: int, a: int, priv_key_A: int, priv_key_B: int) -> int:
-    assert 1 < a < n
-    assert all(2 < i < (n - 1) for i in (priv_key_A, priv_key_B))  # private keys
+    assert 1 < a < n, "A должно принадлежать (1, n)"
+    assert all(
+        2 < i < (n - 1) for i in (priv_key_A, priv_key_B)
+    ), "Секретные ключи должны принадлежать (2, n-1)"  # private keys
 
     pub_A, pub_B = (
         (a ** key) % n for key in (priv_key_A, priv_key_B)

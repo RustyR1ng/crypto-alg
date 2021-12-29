@@ -1,75 +1,41 @@
 from typing import List
 
+from backend.lib_crypto.utils.math import inverse_of
+
 from ..utils.def_str import clear_text, to_indexes, to_symbols
-from ..utils.math import inverse_of
 
 
-class RSA:
-    def __init__(self, open_key: List[int], private_key: List[int]):
-        assert open_key[1] == private_key[1]
-        self.open_key = open_key
-        self.private_key = private_key
+def enc_1(num: int, n: int, e: int):
+    return (num ** e) % n
 
-    @classmethod
-    def init_params(cls, p: int, q: int, e: int):
-        n = p * q
-        euler = (p - 1) * (q - 1)  # Функция Эйлера
 
-        d = inverse_of(e, euler)  # Cекретная экспонента
+# Шифрование
+def enc(text: str, p: str, q: str, e: str):
+    p, q, e = map(int, (p, q, e))
+    n = p * q
+    euler = (p - 1) * (q - 1)  # Функция Эйлера
+    d = inverse_of(e, euler)
+    m = to_indexes(clear_text(text))
+    enc_m = [enc_1(symbol, n, e) for symbol in m]
 
-        return cls((e, n), (d, n))
+    return f"{enc_m} d={d}, n={n}"
 
-    def __str__(self):
-        items = [f"n = {self.n}", f"e = {self.e}", f"d = {self.d}"]
-        keys = [
-            f"Открытый ключ: {self.open_key}",
-            f"Секретный ключ: {self.private_key}",
-        ]
-        res = ["\n".join(s) for s in [items, keys]]
-        return "\n" + "\n".join(res) + "\n"
 
-    @property  # Открытый ключ
-    def open_key(self):
-        return self.e, self.n
+def dec_1(num: int, d: int, n: int):
+    return (num ** d) % n
 
-    @open_key.setter
-    def open_key(self, key):
-        self.n = key[1]
-        self.e = key[0]
 
-    @property  # Закрытый ключ
-    def private_key(self):
-        return self.d, self.n
-
-    @private_key.setter
-    def private_key(self, key):
-        self.n = key[1]
-        self.d = key[0]
-
-    def enc_1(self, num: int):
-        return (num ** self.e) % self.n
-
-    # Шифрование
-    def enc(self, m: str):
-        m = to_indexes(clear_text(m))
-        enc_m = [self.enc_1(symbol) for symbol in m]
-        return enc_m
-
-    def dec_1(self, num: int):
-        return (num ** self.d) % self.n
-
-    # Расширвание
-    def dec(self, enc_m: List[int]):
-        m = [self.dec_1(symbol) for symbol in enc_m]
-        m = to_symbols(m)
-        return m
+# Расширвание
+def dec(text: str, d: str, n: str):
+    d, n = map(int, (d, n))
+    m = [dec_1(symbol, d, n) for symbol in text]
+    m = to_symbols(m)
+    return m
 
 
 def main():
-    from ..tests.test import test_crypt
-
-    encrypter = RSA((23, 247), (47, 247))
-    test_crypt(encrypter.enc, encrypter.dec)
+    e, n = 23, 247
+    d = 47
 
 
 if __name__ == "__main__":

@@ -30,7 +30,7 @@ class NAME:
     Note_Shenon = "Note Shenon"
     A5_1 = "A5/1"
     AES = "AES"
-    Kuznyechick_ECB = "Kuznyechick"
+    Kuznyechick_ECB = "Kuznyechick ECB"
     Magma_CTR = "Magma CTR"
     Magma_ECB = "Magma ECB"
     ECC = "ECC"

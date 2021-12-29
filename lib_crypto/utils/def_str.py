@@ -41,6 +41,19 @@ def is_hex(s):
         return False
 
 
+def is_int(s):
+    if s[0] in ("-", "+"):
+        return s[1:].isdigit()
+    return s.isdigit()
+
+
+def is_symbols_in(text, symbols):
+    from re import search
+
+    pattern = f"[\d]"
+    return False if search(pattern, text) else True
+
+
 def random_char(alph=default_alph):
     from random import choice
 

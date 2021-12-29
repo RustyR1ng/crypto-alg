@@ -1,6 +1,7 @@
 from typing import List
 
 from ..data import default_alph
+from ..utils.def_str import is_symbols_in
 
 
 def create_row(sym: str, alph: str) -> str:
@@ -22,10 +23,14 @@ def create_table(key: str, alph: str) -> List[str]:
 DEFAULT_KEY = "ильдар"
 
 
+def check_key(key, alph):
+    assert is_symbols_in(key, alph), "Ключ должен содержать только символы из алфавита"
+
+
 def enc(text: str, alph: str = default_alph, key: str = DEFAULT_KEY, **kwargs) -> str:
     result = []
     # table = create_table(alph, key)
-
+    check_key(key, alph)
     for i, sym in enumerate(text):
 
         sym = sym.lower()
@@ -49,7 +54,7 @@ def enc(text: str, alph: str = default_alph, key: str = DEFAULT_KEY, **kwargs) -
 def dec(text: str, alph: str = default_alph, key: str = DEFAULT_KEY, **kwargs) -> str:
     result = []
     # table = create_table(alph, key)
-
+    check_key(key, alph)
     for i, sym in enumerate(text):
         sym = sym.lower()
 

@@ -8,7 +8,7 @@ C = 357
 T0 = 5
 
 
-def enc(text, alph=default_alph, **kwargs):
+def enc(text: str, alph: str = default_alph, **kwargs) -> str:
     gamma = [*lcg(M, A, C, T0, len(text))]
     result = [
         (i + j + 1) % M
@@ -18,11 +18,11 @@ def enc(text, alph=default_alph, **kwargs):
         )
     ]
 
-    return result
+    return " ".join(map(str, result))
 
 
-def dec(text, alph=default_alph, **kwargs):
-
+def dec(text: str, alph: str = default_alph, **kwargs):
+    text = list(map(int, text.split(" ")))
     gamma = [*lcg(M, A, C, T0, len(text))]
     result = [
         (i - j - 1) % M

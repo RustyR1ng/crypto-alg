@@ -1,15 +1,17 @@
 from ..data import default_alph
+from ..utils.def_str import is_symbols_in
 from .Belazo import create_row
 
 DEFAULT_KEY = "л"
 
 
-def check_key(key: str) -> None:
+def check_key(key: str, alph: str) -> None:
     assert len(key) == 1, "Длина ключа должна быть равна 1"
+    assert is_symbols_in(key, alph), "Ключ должен содержать только символы из алфавита"
 
 
 def enc(text: str, alph: str = default_alph, key: str = DEFAULT_KEY, **kwargs) -> str:
-    check_key(key)
+    check_key(key, alph)
 
     # alph += " ,:-."
     result = []
@@ -33,7 +35,7 @@ def enc(text: str, alph: str = default_alph, key: str = DEFAULT_KEY, **kwargs) -
 
 
 def dec(text: str, alph: str = default_alph, key: str = DEFAULT_KEY, **kwargs) -> str:
-    check_key(key)
+    check_key(key, alph)
 
     # alph += " ,:-."
     result = []

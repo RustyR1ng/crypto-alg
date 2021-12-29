@@ -26,8 +26,6 @@ from ..utils.hash import kv_hash
 from ..utils.math import co_prime, inverse_of
 from ..utils.printing import print_kv
 
-p, q, e, d = 3557, 2579, 3, 25  # example
-
 
 def enc(text: str, P: str, Q: str, E: str) -> int:
     P, Q, E = map(int, (P, Q, E))

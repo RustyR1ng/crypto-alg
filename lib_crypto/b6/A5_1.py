@@ -6,6 +6,7 @@ from re import match
 from typing import List
 
 from ..utils.def_bin import bin_to_str, to_binary
+from ..utils.def_str import clear_text as ct
 
 
 @dataclass
@@ -45,8 +46,9 @@ class Crypter:
         binary = to_binary(msg)
         keystream = self.configure(len(binary), key)
         res = [binary[i] ^ keystream[i] for i in range(len(binary))]
+        res = "".join(list(map(str, res)))
 
-        return "".join(list(map(str, res)))
+        return res
 
     def dec(
         self,
@@ -56,11 +58,11 @@ class Crypter:
         """
         Takes in a cipher, gets the keystream from its length, cipher is XOR'd with keystream, and converted to string.
         """
+
         keystream = self.configure(len(msg), key)
 
-        res = [bit ^ keystream[i] for i, bit in enumerate(list(map(int, msg)))]
-
-        return bin_to_str("".join(list(map(str, res))))
+        res = [bit ^ keystream[i] for i, bit in enumerate((map(int, msg)))]
+        return bin_to_str("".join((map(str, res))))
 
 
 def get_registers(key: List[int], reg_confs: List[Reg]) -> List[List[int]]:
@@ -79,8 +81,8 @@ def get_registers(key: List[int], reg_confs: List[Reg]) -> List[List[int]]:
 def set_key(key: str) -> List[int]:
     """Sets the key and loads the registers if it contains 0's and 1's and if it's exactly 64 bits."""
 
-    assert len(key) == 64
-    assert match("^([01])+", key)
+    assert len(key) == 64, "Ключ должен быть 64 битным"
+    assert match("^([01])+", key), "Ключ должен быть в двоичной системе"
 
     key = list(map(int, key))
 
@@ -125,11 +127,13 @@ def get_keystream(
 
 # Example of 64-bit key: 0101001000011010110001110001100100101001000000110111111010110111
 def enc(text: str, key: str, conf=REGS_CONF) -> str:
+    text = ct(text)
     crypter = Crypter(conf)
     return crypter.enc(text, key)
 
 
 def dec(text: str, key: str, conf=REGS_CONF) -> str:
+    text = text.replace("\n", "")
     crypter = Crypter(conf)
     return crypter.dec(text, key)
 

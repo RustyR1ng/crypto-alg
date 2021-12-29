@@ -1,6 +1,7 @@
 from typing import List
 
 from ..data import default_alph
+from ..utils.def_str import is_int
 
 
 def alph_to_sq(alph: str) -> List[List[str]]:
@@ -30,7 +31,9 @@ def enc(text: str, alph: str = default_alph, **kwargs) -> str:
 
 
 def dec(text: str, alph: str = default_alph, **kwargs) -> str:
+
     text = text.split()
+    assert all(is_int(i) for i in text), "Шифр должен состоять из чисел"
     sq = alph_to_sq(alph)
 
     return "".join([sq[int(sym[0]) - 1][int(sym[1]) - 1] for sym in text])

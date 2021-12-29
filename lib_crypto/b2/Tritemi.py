@@ -1,9 +1,16 @@
 from ..data import default_alph
+from ..utils.def_str import is_symbols_in
+
+
+def check_text(text, alph):
+    assert is_symbols_in(
+        text, alph
+    ), "Текст должен содержать только символы из алфавита"
 
 
 def enc(text: str, alph: str = default_alph, **kwargs) -> str:
     result = []
-
+    check_text(text, alph)
     for i, sym in enumerate(text):
         if sym not in alph:
             result.append(sym)
@@ -22,6 +29,7 @@ def enc(text: str, alph: str = default_alph, **kwargs) -> str:
 def dec(text: str, alph: str = default_alph, **kwargs) -> str:
     result = []
 
+    check_text(text, alph)
     for i, sym in enumerate(text):
         if sym not in alph:
             result.append(sym)

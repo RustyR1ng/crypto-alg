@@ -72,7 +72,7 @@ def check_cols(bygram: str, matrix: np.ndarray) -> bool:
 
 def pleif_row(bygram: str, matrix: np.ndarray, mode: int) -> List[str]:
     num_cols = matrix.shape[1]
-    shift = 1 if mode == "enc" else -1
+    shift = 1 if mode == MODE.ENCRYPT else -1
     return [
         matrix[get_row(item, matrix)][(get_col(item, matrix) + shift) % num_cols]
         for item in bygram
@@ -81,7 +81,7 @@ def pleif_row(bygram: str, matrix: np.ndarray, mode: int) -> List[str]:
 
 def pleif_col(bygram: str, matrix: np.ndarray, mode: int) -> List[str]:
     num_rows = matrix.shape[0]
-    shift = 1 if mode == "enc" else -1
+    shift = 1 if mode == MODE.ENCRYPT else -1
     return [
         matrix[(get_row(item, matrix) + shift) % num_rows][get_col(item, matrix)]
         for item in bygram
@@ -122,6 +122,7 @@ def enc(text: str, alph: str = default_alph, key: str = "штурм") -> str:
 
     bygrams = get_bygrams(text)
     key_matrix = get_key_matrix(key, alph)
+    print(key_matrix)
 
     result = get_pleif(bygrams, key_matrix, mode)
 
@@ -135,6 +136,7 @@ def dec(text: str, alph: str = default_alph, key: str = "штурм") -> str:
 
     bygrams = get_bygrams(text)
     key_matrix = get_key_matrix(key, alph)
+    print(key_matrix)
 
     result = get_pleif(bygrams, key_matrix, mode)
 

@@ -24,7 +24,7 @@ def gen_x(p):
 
 
 def check_x(x, p):
-    assert 2 < x < p - 1
+    assert 2 < x < p - 1, "X должно принадлежать (2, p-1)"
 
 
 def gen_y(g, x, p):

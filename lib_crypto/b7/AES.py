@@ -371,12 +371,23 @@ def decrypt(key, text, workload=100000):
     return AES(key).decrypt_cbc(text, iv)
 
 
+def check_params(key, iv):
+    assert len(iv) == 16, "Длина вектора = 16"
+    assert len(key) == 16, "Длина ключа = 16"
+
+
 def enc(text: str, iv: str, key: str) -> str:
-    return AES(key).encrypt_cbc(text.encode(), iv)
+    iv = bytes.fromhex(iv)
+    key = bytes.fromhex(key)
+    check_params(key, iv)
+    return AES(key).encrypt_cbc(text.encode(), iv).hex()
 
 
 def dec(text: str, iv: str, key: str) -> str:
-    return AES(key).decrypt_cbc(text, iv)
+    iv = bytes.fromhex(iv)
+    key = bytes.fromhex(key)
+    check_params(key, iv)
+    return AES(key).decrypt_cbc(bytes.fromhex(text), iv).decode()
 
 
 __all__ = ["enc", "dec", "AES"]

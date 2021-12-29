@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-
-from re import A
+import traceback
 
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -33,7 +32,7 @@ def enrypt():
             "text": get_result(alg, MODE.ENCRYPT, data),
         }
     except Exception as e:
-        print(e)
+        print(traceback.format_exc())
         result = {
             "status": "error",
             "text": e.__str__(),
@@ -53,7 +52,7 @@ def decrypt():
             "text": get_result(alg, MODE.DECRYPT, data),
         }
     except Exception as e:
-        print(e)
+        print(traceback.format_exc())
         result = {
             "status": "error",
             "text": e.__str__(),
@@ -71,15 +70,9 @@ def algs():
         encrypt_params = inspect.getfullargspec(val[MODE.ENCRYPT])[0]
         print(name)
         encrypt_params.remove("text")
-        encrypt_params = [
-            param for param in encrypt_params if not param.startswith("_")
-        ]
 
         decrypt_params = inspect.getfullargspec(val[MODE.DECRYPT])[0]
         decrypt_params.remove("text")
-        decrypt_params = [
-            param for param in decrypt_params if not param.startswith("_")
-        ]
         data.update(
             {
                 name: {

@@ -12,7 +12,7 @@ BLOCK_SIZE = Crypter.blocksize
 
 def get_key(key: str) -> bytes:
     key_bytes = str_to_bytes(key)
-    assert len(key_bytes) == KEYSIZE
+    assert len(key_bytes) == KEYSIZE, "Длина ключа должна = 32"
     return key_bytes
 
 

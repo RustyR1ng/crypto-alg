@@ -55,13 +55,15 @@ def nums_to_vectors(nums: List[int], cols: int) -> List[Any]:
 
 def enc(text: str, alph: str = default_alph, key: str = "бархатный", **kwargs) -> str:
     text = clear_text(text, alph)
-
+    print(to_symbols([1, 4, 8, 3, 7, 2, 6, 9, 5]))
+    print(to_symbols([8, 1, 2, 1, 3, 1]))
     key_sqrt = check_key(key, alph)
 
     text_indexes = to_indexes(text, alph)
     text_vectors = nums_to_vectors(text_indexes, key_sqrt)
 
     key_mat = text_to_matrix(key, alph, key_sqrt)
+    print(key_mat)
 
     result = [key_mat * vec for vec in text_vectors]
     result = [item.item() for matrix in result for item in matrix]
@@ -77,6 +79,7 @@ def dec(text: str, alph: str = default_alph, key: str = "бархатный", **
     key_sqrt = check_key(key, alph)
 
     inv_key_matrix = np.linalg.inv(text_to_matrix(key, alph, key_sqrt))
+    print(inv_key_matrix)
 
     vectors = nums_to_vectors(text, key_sqrt)
 

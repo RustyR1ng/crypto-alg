@@ -99,7 +99,7 @@ def main():
     ecp = enc(text_1000, p, q, a, x, k)
     chk = dec(text_1000, p, q, a, y, ecp)
 
-    print_kv("Подпись 1000", (r, s))
+    print_kv("Подпись 1000", ecp)
     print_kv("Проверка подписи", chk)
 
 
