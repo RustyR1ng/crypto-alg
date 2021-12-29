@@ -3,7 +3,7 @@ from random import randint
 from typing import List
 
 from ..utils.def_str import clear_text, to_indexes, to_symbols
-from ..utils.math import inverse_of
+from ..utils.math import co_prime, inverse_of
 
 
 @dataclass
@@ -56,16 +56,17 @@ class Elgamal:
     def enc(self, msg: str, k=None) -> str:
 
         p, g, y = self.open_key.p, self.open_key.g, self.open_key.y
-        assert 1 < g < p
+        assert 1 < g < p, "1<g<p"
 
         msg = to_indexes(clear_text(msg))
         enc_m = []
 
         for num in msg:
             k = randint(2, p - 2)
+            assert co_prime(k, p - 1), "k не взаимно простое с ф.Эйлера от p"
             a = (g ** k) % p
             b = ((y ** k) * num) % p
-            assert p > num
+            assert p > num, "p>m_i"
             enc_m.append(a)
             enc_m.append(b)
         enc_m = " ".join(list(map(str, enc_m)))

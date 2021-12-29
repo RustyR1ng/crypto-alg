@@ -15,7 +15,7 @@ def enc(text: str, p: str, q: str, e: str):
     euler = (p - 1) * (q - 1)  # Функция Эйлера
     d = inverse_of(e, euler)
     m = to_indexes(clear_text(text))
-    enc_m = " ".join([enc_1(symbol, n, e) for symbol in m])
+    enc_m = " ".join(map(str, [enc_1(symbol, n, e) for symbol in m]))
 
     return f"{enc_m} d={d}, n={n}"
 
