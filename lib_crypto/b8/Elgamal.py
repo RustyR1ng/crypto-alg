@@ -56,6 +56,7 @@ class Elgamal:
     def enc(self, msg: str, k=None) -> str:
 
         p, g, y = self.open_key.p, self.open_key.g, self.open_key.y
+        assert 1 < g < p
 
         msg = to_indexes(clear_text(msg))
         enc_m = []
@@ -64,7 +65,7 @@ class Elgamal:
             k = randint(2, p - 2)
             a = (g ** k) % p
             b = ((y ** k) * num) % p
-
+            assert p > num
             enc_m.append(a)
             enc_m.append(b)
         enc_m = " ".join(list(map(str, enc_m)))
@@ -86,6 +87,7 @@ class Elgamal:
 
 def enc(text: str, p: str, g: str, y: str) -> str:
     p, g, y = int(p), int(g), int(y)
+
     open_key = OpenKey(p, g, y)
 
     crypter = Elgamal()

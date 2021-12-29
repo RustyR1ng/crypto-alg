@@ -377,17 +377,17 @@ def check_params(key, iv):
 
 
 def enc(text: str, iv: str, key: str) -> str:
-    iv = bytes.fromhex(iv)
     key = bytes.fromhex(key)
     check_params(key, iv)
-    return AES(key).encrypt_cbc(text.encode(), iv).hex()
+    return encrypt(key, text).hex()
 
 
 def dec(text: str, iv: str, key: str) -> str:
     iv = bytes.fromhex(iv)
     key = bytes.fromhex(key)
     check_params(key, iv)
-    return AES(key).decrypt_cbc(bytes.fromhex(text), iv).decode()
+
+    return decrypt(key, bytes.fromhex(text)).decode()
 
 
 __all__ = ["enc", "dec", "AES"]
