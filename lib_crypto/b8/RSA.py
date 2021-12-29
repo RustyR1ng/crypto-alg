@@ -27,7 +27,7 @@ def dec_1(num: int, d: int, n: int):
 # Расширвание
 def dec(text: str, d: str, n: str):
     d, n = map(int, (d, n))
-    m = [dec_1(symbol, d, n) for symbol in text]
+    m = [dec_1(int(symbol), d, n) for symbol in text]
     m = to_symbols(m)
     return m
 
