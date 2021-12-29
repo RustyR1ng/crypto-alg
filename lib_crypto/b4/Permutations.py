@@ -1,7 +1,7 @@
 import numpy as np
 
 from ..data import default_alph
-from ..utils.def_str import clear_text, to_indexes
+from ..utils.def_str import clear_text, random_char, to_indexes
 
 
 def reverse_rows(matrix):
@@ -10,9 +10,9 @@ def reverse_rows(matrix):
     return matrix
 
 
-def get_text_matrix(text, cols):
+def get_text_matrix(text, cols, alph):
     fill = cols - (len(text) % cols) if (len(text) % cols) != 0 else 0
-    text = list(text) + ([" "] * fill)
+    text = list(text) + ([random_char()] * fill)
     matrix = np.array(text).reshape(-1, cols)
 
     return reverse_rows(matrix)
@@ -30,7 +30,7 @@ def enc(text, alph=default_alph, key="год"):
 
     text = clear_text(text, alph)
     cols = len(key)
-    text_matrix = get_text_matrix(text, cols)
+    text_matrix = get_text_matrix(text, cols, alph)
 
     key = get_key(key, alph)
 
@@ -43,7 +43,7 @@ def dec(text, alph=default_alph, key="год"):
     text = clear_text(text, alph)
     cols = len(key)
     rows = len(text) // cols
-    text_matrix = get_text_matrix(text, rows).transpose()
+    text_matrix = get_text_matrix(text, rows, alph).transpose()
 
     key = get_key(key, alph)
 
