@@ -372,20 +372,18 @@ def decrypt(key, text, workload=100000):
 
 
 def check_params(key, iv):
-    assert len(iv) == 16, "Длина вектора = 16"
     assert len(key) == 16, "Длина ключа = 16"
 
 
-def enc(text: str, iv: str, key: str) -> str:
+def enc(text: str, key: str) -> str:
     key = bytes.fromhex(key)
-    check_params(key, iv)
+    check_params(key)
     return encrypt(key, text).hex()
 
 
-def dec(text: str, iv: str, key: str) -> str:
-    iv = bytes.fromhex(iv)
+def dec(text: str, key: str) -> str:
     key = bytes.fromhex(key)
-    check_params(key, iv)
+    check_params(key)
 
     return decrypt(key, bytes.fromhex(text)).decode()
 
