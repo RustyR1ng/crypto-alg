@@ -371,7 +371,7 @@ def decrypt(key, text, workload=100000):
     return AES(key).decrypt_cbc(text, iv)
 
 
-def check_params(key, iv):
+def check_params(key):
     assert len(key) == 16, "Длина ключа = 16"
 
 
