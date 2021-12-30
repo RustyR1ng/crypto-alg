@@ -46,6 +46,8 @@ class Crypter:
         binary = to_binary(msg)
         keystream = self.configure(len(binary), key)
         print("поток", keystream)
+        for i in range(len(binary)):
+            print(i, binary[i])
         res = [binary[i] ^ keystream[i] for i in range(len(binary))]
         res = "".join(list(map(str, res)))
 
@@ -62,6 +64,7 @@ class Crypter:
 
         keystream = self.configure(len(msg), key)
         print("поток", keystream)
+
         res = [bit ^ keystream[i] for i, bit in enumerate((map(int, msg)))]
         return bin_to_str("".join((map(str, res))))
 
