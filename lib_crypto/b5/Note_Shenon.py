@@ -18,7 +18,7 @@ def enc(text: str, alph: str = default_alph, **kwargs) -> str:
         )
     ]
 
-    return " ".join(map(str, result))
+    return f"M={M},A={A},C={C},T0={T0}" + " ".join(map(str, result))
 
 
 def dec(text: str, alph: str = default_alph, **kwargs):
@@ -33,7 +33,7 @@ def dec(text: str, alph: str = default_alph, **kwargs):
     ]
     result = to_symbols(result, alph)
 
-    return result
+    return  f"M={M},A={A},C={C},T0={T0}" + result
 
 
 def main():
